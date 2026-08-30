@@ -7,6 +7,9 @@ import pytest
 from conftest import read_table
 
 from cadence.assets.dashboard import boxoffice_dashboard_data
+from cadence.resources import PROJECT_ROOT
+
+REPO_REPORT_DIR = PROJECT_ROOT / "reports" / "boxoffice"
 
 
 @pytest.fixture
@@ -33,7 +36,7 @@ def test_writes_json_and_js_twins(exported):
     assert json.dumps(payload)  # round-trips
 
     assert set(payload) >= {
-        "generated_at",
+        "season",
         "goal",
         "totals",
         "attribution",
@@ -66,3 +69,35 @@ def test_the_plan_covers_the_gap(exported):
     assert payload["goal"]["target_net"] == pytest.approx(payload["totals"]["net"] * 1.05)
     assert payload["levers_total"] >= payload["goal"]["gap"]
     assert all(lever["amount"] > 0 for lever in payload["levers"])
+
+
+def test_export_is_deterministic(exported, shipped_run, tmp_path, monkeypatch):
+    """Re-exporting the same warehouse must produce byte-identical files.
+
+    This is what keeps `git status` clean after `make materialize`: the committed
+    report under reports/boxoffice/ is a pure function of the shipped data, so a
+    re-run rewrites the same bytes rather than churning a timestamp.
+    """
+    _, db_path = shipped_run
+    first = (exported / "data.json").read_bytes()
+    first_js = (exported / "data.js").read_bytes()
+
+    again = tmp_path / "boxoffice-again"
+    monkeypatch.setenv("BOXOFFICE_REPORT_DIR", str(again))
+    boxoffice_dashboard_data(
+        dg.build_asset_context(),
+        stg_orders=read_table(db_path, "stg_orders"),
+        stg_events=read_table(db_path, "stg_events"),
+        stg_campaigns=read_table(db_path, "stg_campaigns"),
+        attendance_by_event=read_table(db_path, "attendance_by_event"),
+    )
+    assert (again / "data.json").read_bytes() == first
+    assert (again / "data.js").read_bytes() == first_js
+
+
+def test_committed_report_matches_shipped_data(exported):
+    """The report committed to reports/boxoffice/ must match what a fresh clone
+    materializes from the shipped 7-night data — no stale numbers in the repo."""
+    committed = json.loads((REPO_REPORT_DIR / "data.json").read_text(encoding="utf-8"))
+    fresh = json.loads((exported / "data.json").read_text(encoding="utf-8"))
+    assert committed == fresh

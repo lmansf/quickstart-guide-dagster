@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-08-30T22:11:17+00:00",
   "season": {
     "label": "Summer season, July 1–8 2025",
     "first_show": "2025-07-01",
     "last_show": "2025-07-08",
-    "last_order_date": "2025-07-07"
+    "last_order_date": "2025-07-07",
+    "scans_through": "2025-07-07",
+    "nights_scanned": 7
   },
   "goal": {
     "pct": 0.05,
@@ -22,8 +23,8 @@
     "seats_total": 9600,
     "seat_sell_through": 0.8067708333333333,
     "net_per_kept_ticket": 46.473377703826955,
-    "show_up_rate": 0.8361064891846922,
-    "scanned": 6030,
+    "show_up_rate": 0.8389735364875701,
+    "scanned": 5231,
     "marketing_spend": 9670.0,
     "attributed_net_clean": 153299.0,
     "rpd_blended": 15.853050672182006
@@ -110,8 +111,8 @@
       "first4_share": 0.34847806758442085
     },
     "attendance": {
-      "avg_rate": 0.8361064891846922,
-      "no_shows": 1182,
+      "avg_rate": 0.8389735364875701,
+      "no_shows": 1004,
       "best": {
         "name": "Laugh Track Live",
         "rate": 0.8974093264248705
@@ -120,7 +121,7 @@
         "name": "Static Bloom",
         "rate": 0.7142857142857143,
         "no_shows": 254,
-        "delta_pts": 12.182077489897791
+        "delta_pts": 12.468782220185581
       }
     }
   },
@@ -406,12 +407,7 @@
           "net": 9570.0
         }
       },
-      "attendance": {
-        "kept": 977,
-        "scanned": 799,
-        "show_up": 0.8178096212896623,
-        "no_shows": 178
-      }
+      "attendance": null
     }
   ],
   "daily": [

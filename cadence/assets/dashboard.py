@@ -14,7 +14,6 @@ in the repo; ``refresh_all`` includes the group, so a normal refresh republishes
 
 import json
 import os
-from datetime import UTC, datetime
 from pathlib import Path
 
 import dagster as dg
@@ -132,6 +131,10 @@ def boxoffice_dashboard_data(
                 "attendance": att,
             }
         )
+
+    # Which nights actually have gate scans: nights 1-7 ship in data/scans/, and the
+    # eighth arrives when the sensor demo delivers it (guide chapter 04).
+    scanned_events = [e for e in events if e["attendance"] is not None]
 
     # ---- daily pacing -------------------------------------------------------
     daily = [
@@ -299,13 +302,18 @@ def boxoffice_dashboard_data(
         },
     }
 
+    # NOTE: this payload is a pure function of the upstream assets — no wall-clock
+    # timestamp, no randomness. Re-exporting unchanged data rewrites byte-identical
+    # files, so `git status` stays clean and the committed report always matches
+    # what a fresh clone materializes. See docs/guide/06-publishing.md.
     payload = {
-        "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "season": {
             "label": "Summer season, July 1–8 2025",
             "first_show": events[0]["date"] if events else None,
             "last_show": events[-1]["date"] if events else None,
             "last_order_date": daily[-1]["date"] if daily else None,
+            "scans_through": scanned_events[-1]["date"] if scanned_events else None,
+            "nights_scanned": len(scanned_events),
         },
         "goal": {"pct": GOAL_PCT, "target_net": goal_target, "gap": goal_gap},
         "totals": {
