@@ -47,7 +47,13 @@ for a deploy pipeline that writes into a build directory).
 ## Deploying (e.g. Vercel)
 
 The directory is a self-contained static site: serve `reports/boxoffice/` as
-the site root, no build step. To keep it live, have your Dagster deployment
+the site root, no build step.
+
+**Vercel is preconfigured.** The repo root ships a `vercel.json` that points
+`outputDirectory` at this folder and stubs out install/build, plus a
+`.vercelignore` that hides the Python project. Without those, Vercel sees
+`pyproject.toml`, assumes a Python app, and fails with *"No python entrypoint
+found"* — there is no server here, only committed HTML/CSS/JS. To keep it live, have your Dagster deployment
 materialize `boxoffice_dashboard_data` and publish the refreshed `data.js` /
 `data.json` (commit + push, or upload during a deploy hook) — the pages pick up
 the new numbers on the next load.

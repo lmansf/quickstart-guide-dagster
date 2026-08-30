@@ -97,6 +97,12 @@ To keep it live, have your deployment materialize the asset and publish the refr
 / `data.json`. Set `BOXOFFICE_REPORT_DIR` to redirect the export somewhere else (the tests use
 this; so would a deploy that writes into a build directory).
 
+The repo ships a `vercel.json` wired for exactly this: `outputDirectory` points at
+`reports/boxoffice`, and install/build are stubbed because there is nothing to build. A
+`.vercelignore` hides the Python project, so the host doesn't mistake a data pipeline for a web
+service and go looking for a server entrypoint that was never meant to exist — a small lesson in
+its own right about publishing artifacts out of a pipeline repo.
+
 ## What you learned
 
 - Assets can produce **external artifacts**, not just tables — they return `None` and still get

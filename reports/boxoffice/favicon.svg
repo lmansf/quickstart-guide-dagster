@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Cadence Hall box office">
+  <rect width="32" height="32" rx="7" fill="#1c1a2e"/>
+  <!-- ticket stub -->
+  <path d="M7 11h18a2 2 0 0 1 2 2v2.2a2.6 2.6 0 0 0 0 5.2V22a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-1.6a2.6 2.6 0 0 0 0-5.2V13a2 2 0 0 1 2-2z" fill="#f5b642"/>
+  <!-- perforation -->
+  <path d="M19 12.4v10.2" stroke="#1c1a2e" stroke-width="1.4" stroke-dasharray="1.6 1.8" stroke-linecap="round"/>
+</svg>

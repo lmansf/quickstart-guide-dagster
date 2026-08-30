@@ -1,0 +1,19 @@
+# Vercel deploys ONLY the static box-office report (see vercel.json →
+# outputDirectory). Excluding the Python project keeps Vercel from
+# auto-detecting a Python app and failing with "No python entrypoint found" —
+# there is no server here, just committed HTML/CSS/JS.
+pyproject.toml
+uv.lock
+.python-version
+Makefile
+cadence/
+tests/
+scripts/
+data/
+docs/
+.github/
+.dagster_home/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
