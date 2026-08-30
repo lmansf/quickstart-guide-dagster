@@ -73,7 +73,7 @@ def boxoffice_dashboard_data(
     orders = stg_orders.copy()
     orders["refunded_qty"] = orders["qty"].where(orders["status"] == "refunded", 0)
     # Cleaned promo codes: the canonical form regardless of whether the README
-    # Step 5 staging fix has been applied yet (idempotent if it has).
+    # Chapter 3 staging fix has been applied yet (idempotent if it has).
     orders["promo_code_clean"] = orders["promo_code"].str.strip().str.upper()
 
     # ---- season totals ------------------------------------------------------

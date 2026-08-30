@@ -4,7 +4,7 @@ numbers the guide promises."""
 import dagster as dg
 import duckdb
 import pytest
-from conftest import DB_FILENAME, STEP5_SKIP_REASON, read_table
+from conftest import CHAPTER3_SKIP_REASON, DB_FILENAME, read_table
 
 from cadence.assets import daily, raw, staging
 
@@ -78,7 +78,7 @@ def test_revenue_by_tier_total(shipped_run):
     is_total = df.apply(lambda row: "TOTAL" in {str(v) for v in row.values}, axis=1)
     assert int(is_total.sum()) == 1
     total_net = float(df.loc[is_total, "net_revenue"].iloc[0])
-    # the README prints this to the cent, and the inputs are byte-pinned — assert exactly
+    # the guide prints this to the cent, and the inputs are byte-pinned — assert exactly
     assert total_net == pytest.approx(335_166.00, abs=0.01)
     # the TOTAL row equals the sum of the per-(event, tier) rows
     assert abs(total_net - float(df.loc[~is_total, "net_revenue"].sum())) < 1.0
@@ -96,10 +96,10 @@ def test_overall_show_up_rate_in_band(shipped_run):
 
 
 def test_pre_fix_kpi_story(shipped_run, fix_applied):
-    """Before the Step 5 fix, dirty promo codes crown the WRONG campaigns —
-    the exact misdirection README Step 3 shows the reader."""
+    """Before the Chapter 3 fix, dirty promo codes crown the WRONG campaigns —
+    the exact misdirection guide Chapter 2 shows the reader."""
     if fix_applied:
-        pytest.skip(STEP5_SKIP_REASON)
+        pytest.skip(CHAPTER3_SKIP_REASON)
     _, db_path = shipped_run
     report = read_table(db_path, "box_office_report")
     kpis = dict(zip(report["metric"], report["value"], strict=True))
@@ -121,7 +121,7 @@ def test_daily_sales_single_partition(tmp_path, tmp_io_manager):
 
 def test_daily_sales_empty_final_partition_succeeds(tmp_path, tmp_io_manager):
     """2025-07-08 is legitimately empty (sales close the night before the last show):
-    the README promises the empty slice still materializes without error."""
+    guide Chapter 5 promises the empty slice still materializes without error."""
     result = dg.materialize(
         [raw.raw_orders, staging.stg_orders, daily.daily_sales],
         partition_key="2025-07-08",

@@ -159,7 +159,7 @@ asset **adds, changes, or drops**.
 | `order_date` | str `YYYY-MM-DD` | date part of `ordered_at`; the `daily_sales` partition key |
 | `gross_revenue` | float64 | `qty × unit_price_usd` |
 | `net_revenue` | float64 | = `gross_revenue`, but `0.0` where `status == "refunded"` |
-| `promo_code` | str, nullable | **shipped untouched — this is the planted bug.** The TODO in `cadence/assets/staging.py` tells you to apply `.str.strip().str.upper()` (README Step 5) |
+| `promo_code` | str, nullable | **shipped untouched — this is the planted bug.** The TODO in `cadence/assets/staging.py` tells you to apply `.str.strip().str.upper()` ([guide Chapter 3](guide/03-checks.md)) |
 
 Also drops any row with `qty ≤ 0` or `unit_price_usd ≤ 0` (none in shipped data — the
 blocking `order_amounts_valid` check and the break-it-on-purpose exercise live on this rule).
@@ -217,7 +217,7 @@ until `make new-day` delivers night 8 and the sensor ingests it, this mart has *
 Columns `metric (str), value (str)`. The rows: `total_net_revenue`, `tickets_sold`,
 `overall_show_up_rate`, `best_campaign_by_revenue`, `best_campaign_per_dollar`,
 `top_tier_by_revenue`, `sellout_events`, `worst_no_show_event`. The asset's
-`executive_summary` metadata is the Markdown version you read in the UI (README Step 3).
+`executive_summary` metadata is the Markdown version you read in the UI ([guide Chapter 1](guide/01-assets.md)).
 
 Denominator note: `tickets_sold` counts **all** orders (refunds included, all 8 events),
 while `overall_show_up_rate` comes from `attendance_by_event` — **completed** orders only,
@@ -245,7 +245,7 @@ somewhere you can see it. If you find dirt that isn't in this table, *that* woul
 
 | anomaly | exact count | planted by (`cadence/data_gen.py`) | surfaced by |
 |---|---|---|---|
-| **Mangled promo codes** — lowercase, leading/trailing space, or Title Case (e.g. `' SUMMER25'`, `'summer25'`, `'VIPNIGHT '`) | **150** total: 90 from SUMMER25, 30 from VIPNIGHT, 30 from other codes | `DIRTY_SUMMER25_COUNT`, `DIRTY_VIPNIGHT_COUNT`, `DIRTY_OTHER_COUNT` (sum = `DIRTY_PROMO_TOTAL`), mutations from `PROMO_MUTATIONS` | Check `all_promo_orders_attributed` — **red by design** on first run; the `(unattributed)` row in `campaign_performance`. Fix: the TODO in `stg_orders` (README Step 5) |
+| **Mangled promo codes** — lowercase, leading/trailing space, or Title Case (e.g. `' SUMMER25'`, `'summer25'`, `'VIPNIGHT '`) | **150** total: 90 from SUMMER25, 30 from VIPNIGHT, 30 from other codes | `DIRTY_SUMMER25_COUNT`, `DIRTY_VIPNIGHT_COUNT`, `DIRTY_OTHER_COUNT` (sum = `DIRTY_PROMO_TOTAL`), mutations from `PROMO_MUTATIONS` | Check `all_promo_orders_attributed` — **red by design** on first run; the `(unattributed)` row in `campaign_performance`. Fix: the TODO in `stg_orders` ([guide Chapter 3](guide/03-checks.md)) |
 | **Duplicate gate scans** — a second scan row for the same `ticket_id`, 1–3 min later, possibly at a different gate | 1.5% of scanned tickets (deterministic at seed 42; exact figure in the asset metadata) | `DUPLICATE_SCAN_RATE`, `DUPLICATE_DELAY_SECONDS` | `stg_ticket_scans` dedupes (first scan wins) and reports `duplicate_scans_dropped` in its materialization metadata |
 | **Orphan scans** — scans referencing orders that don't exist | **3**, all in the 2025-07-03 file: `ORD-99991`, `ORD-99992`, `ORD-99993` | `ORPHAN_NIGHT`, `ORPHAN_ORDER_IDS` | `stg_ticket_scans` drops them and reports `orphan_scans_dropped` (= 3) |
 | **Refunded orders** — kept in the data with full price/qty | ~7% of orders | `REFUND_RATE` | `stg_orders` zeroes their `net_revenue` and reports `refunded_orders`; `revenue_by_tier` counts `refunded_tickets` |

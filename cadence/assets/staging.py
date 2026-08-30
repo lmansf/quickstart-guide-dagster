@@ -7,7 +7,7 @@ import pandas as pd
 def normalize_promo_codes(s: pd.Series) -> pd.Series:
     """Canonicalize promo codes: strip surrounding whitespace and uppercase (NA-preserving).
 
-    This is THE fix for the planted promo-code bug (README Step 5). The shipped
+    This is THE fix for the planted promo-code bug (docs/guide/03-checks.md). The shipped
     ``stg_orders`` asset deliberately does NOT call it — following the red check's
     hint to this file and applying it is the learner's job.
     """
@@ -59,7 +59,7 @@ def stg_orders(context: dg.AssetExecutionContext, raw_orders: pd.DataFrame) -> p
 
     # =========================================================================================
     # TODO(you): promo codes arrive messy from marketing (" SUMMER25", "summer25", "VIPNIGHT ").
-    # Normalize them here with: .str.strip().str.upper()  (see README Step 5)
+    # Normalize them here with: .str.strip().str.upper()  (see docs/guide/03-checks.md)
     #
     # The `all_promo_orders_attributed` check is red because this line is missing. One-line fix:
     #     df["promo_code"] = normalize_promo_codes(df["promo_code"])

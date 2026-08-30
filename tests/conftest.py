@@ -21,8 +21,8 @@ from cadence.resources import RAW_DIR
 CORE_GROUPS = ("raw", "staging", "marts", "reporting")
 DB_FILENAME = "test.duckdb"
 
-STEP5_SKIP_REASON = (
-    "You've applied the README Step 5 promo-code fix in this working tree — nice. "
+CHAPTER3_SKIP_REASON = (
+    "You've applied the guide's Chapter 3 promo-code fix in this working tree — nice. "
     "This test documents the SHIPPED bug and only runs on a pristine checkout "
     "(git restore cadence/assets/staging.py brings it back)."
 )
@@ -55,7 +55,7 @@ def tmp_io_manager(tmp_path: Path) -> DuckDBPandasIOManager:
 
 @pytest.fixture(scope="session")
 def fix_applied() -> bool:
-    """True when the learner has already applied the README Step 5 fix to stg_orders.
+    """True when the learner has already applied the Chapter 3 fix to stg_orders.
 
     Shipped, stg_orders passes promo codes through untouched, so the 150 planted
     dirty codes survive; after the one-line fix every surviving code is already
@@ -85,7 +85,7 @@ def invoke_definition(definition, frames: dict[str, pd.DataFrame]):
 
 
 def _with_promo_fix(assets: list[dg.AssetsDefinition]) -> list[dg.AssetsDefinition]:
-    """Swap the shipped stg_orders for one that applies the README Step 5 fix."""
+    """Swap the shipped stg_orders for one that applies the Chapter 3 fix."""
     key = dg.AssetKey("stg_orders")
     original = next(a for a in assets if key in a.keys)
 

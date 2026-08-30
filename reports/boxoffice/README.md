@@ -57,7 +57,7 @@ the new numbers on the next load.
 - All figures come from the pipeline's staging/mart tables (`stg_orders`,
   `stg_events`, `stg_campaigns`, `attendance_by_event`).
 - **Campaign figures use cleaned promo codes** (`TRIM` + `UPPER`) regardless of
-  whether the README Step 5 staging fix is applied; page 3 shows the
+  whether the guide's Chapter 3 staging fix is applied; page 3 shows the
   as-recorded vs cleaned attribution side by side and explains the difference.
 - The dataset has no true prior year, so "+5% YoY" is framed as next season's
   target against this season's actuals. Lever-sizing assumptions are constants

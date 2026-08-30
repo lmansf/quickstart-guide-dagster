@@ -1,4 +1,4 @@
-"""Four data-quality checks — one of them is SUPPOSED to fail red. See README Step 5."""
+"""Four data-quality checks — one of them is SUPPOSED to fail red. See docs/guide/03-checks.md."""
 
 import dagster as dg
 import pandas as pd
@@ -56,7 +56,7 @@ def orders_reference_known_events(
     },
     description=(
         "Every promo-coded order matches a known campaign code. "
-        "EXPECTED TO FAIL on first run — see README Step 5."
+        "EXPECTED TO FAIL on first run — see docs/guide/03-checks.md."
     ),
 )
 def all_promo_orders_attributed(
@@ -77,7 +77,7 @@ def all_promo_orders_attributed(
             "sample_bad_codes": dg.MetadataValue.md("\n".join(f"- `{code!r}`" for code in sample)),
             "hint": dg.MetadataValue.text(
                 "Open cadence/assets/staging.py and find the TODO — this check is expected "
-                "to fail until you fix it. See README Step 5."
+                "to fail until you fix it. See docs/guide/03-checks.md."
             ),
         },
     )

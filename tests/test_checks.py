@@ -8,7 +8,7 @@ import duckdb
 import pandas as pd
 import pytest
 from conftest import (
-    STEP5_SKIP_REASON,
+    CHAPTER3_SKIP_REASON,
     invoke_definition,
     materialize_all,
     metadata_value,
@@ -39,7 +39,7 @@ def test_all_four_checks_evaluated(shipped_run):
 
 def test_promo_check_fails_on_shipped_data(shipped_run, fix_applied):
     if fix_applied:
-        pytest.skip(STEP5_SKIP_REASON)
+        pytest.skip(CHAPTER3_SKIP_REASON)
     result, _ = shipped_run
     evaluation = _evaluations(result)[FAILING_CHECK]
     assert evaluation.passed is False
@@ -54,7 +54,7 @@ def test_other_checks_pass_on_shipped_data(shipped_run):
 
 
 def test_promo_check_passes_on_normalized_frame(shipped_run):
-    """Apply the README Step 5 fix to the dirty frames and re-run the check body."""
+    """Apply the Chapter 3 fix to the dirty frames and re-run the check body."""
     _, db_path = shipped_run
     orders = read_table(db_path, "stg_orders")
     campaigns = read_table(db_path, "stg_campaigns")
@@ -79,7 +79,7 @@ def test_promo_check_passes_on_normalized_frame(shipped_run):
 
 def test_promo_check_passes_after_full_pipeline_fix(tmp_path):
     """End-to-end: with a fixed stg_orders, the whole graph goes green AND the
-    README Step 5 story holds — the campaign ranking actually changes."""
+    guide's Chapter 3 story holds — the campaign ranking actually changes."""
     result = materialize_all(tmp_path, fix_promo_codes=True)
     assert result.success
     evaluations = _evaluations(result)
@@ -94,7 +94,7 @@ def test_promo_check_passes_after_full_pipeline_fix(tmp_path):
 
 
 def test_order_amounts_valid_fails_on_duplicate_order_id(shipped_run):
-    """The blocking check's failure path: the README's break-it-on-purpose exercise."""
+    """The blocking check's failure path: the guide's break-it-on-purpose exercise (Chapter 3)."""
     _, db_path = shipped_run
     orders = read_table(db_path, "stg_orders")
     doctored = pd.concat([orders, orders.iloc[[0]]], ignore_index=True)

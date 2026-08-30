@@ -18,7 +18,7 @@ def campaign_performance(
     matches_campaign = stg_orders["promo_code"].isin(known_codes)
 
     # Exact-match join, codes as-is: dirty codes ("' summer25'") fail to join
-    # until the learner applies the staging fix (README Step 5).
+    # until the learner applies the staging fix (docs/guide/03-checks.md).
     matched = stg_orders[has_code & matches_campaign]
     unattributed = stg_orders[has_code & ~matches_campaign]
     organic = stg_orders[~has_code]
