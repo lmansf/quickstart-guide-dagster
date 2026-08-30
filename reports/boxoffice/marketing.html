@@ -9,7 +9,7 @@
 <body>
 
 <header class="masthead">
-  <div class="venue">Cadence Hall · Box office report · Summer season, July 1–8 2025</div>
+  <div class="venue">Cadence Hall · Box office report · <span data-fill="season.label">Summer season, July 1–8 2025</span></div>
   <h1>Marketing &amp; attendance</h1>
   <p class="sub">Page 3 of 3 — which dollars sold tickets, which didn't, and the leakage between a sold ticket and a filled seat.</p>
   <nav class="pages" aria-label="Report pages">
@@ -17,192 +17,64 @@
     <a href="revenue.html">2 · The revenue engine</a>
     <a href="marketing.html" aria-current="page">3 · Marketing &amp; attendance</a>
   </nav>
-  <p class="goal"><strong>Season goal: maximize profit.</strong> This page carries the other two levers: <strong>reallocate ad spend (+$4,000)</strong> and <strong>refunds → exchange credits (+$3,800)</strong> — plus the attribution fix that makes the reallocation trustworthy.</p>
+  <p class="goal"><strong>Season goal: maximize profit.</strong> This page carries the other two levers: <strong>reallocate ad spend (<span data-fill="levers.2.amount" data-fmt="plus_usd0">+$7,100</span>)</strong> and <strong>refunds → exchange credits (<span data-fill="levers.3.amount" data-fmt="plus_usd0">+$3,800</span>)</strong> — plus the attribution fix that makes the reallocation trustworthy.</p>
 </header>
 
 <main>
 
 <section class="card">
   <h2>Revenue per marketing dollar, by campaign</h2>
-  <p class="lede">$9,670 of spend drove $153.3K of attributed net revenue — but the return per dollar spans <strong>4× between the best and worst code-tracked campaign</strong>. Figures below use cleaned promo codes (see next section). Attributed revenue overstates incrementality — some buyers would have come anyway — so the reallocation lever is sized with a 25% haircut.</p>
+  <p class="lede"><span data-fill="totals.marketing_spend" data-fmt="usd0">$9,670</span> of spend drove <span data-fill="totals.attributed_net_clean" data-fmt="usdk">$153.3K</span> of attributed net revenue — but the return per dollar spans <strong><span data-fill="derived.rpd_spread" data-fmt="x1">4×</span> between the best and worst code-tracked campaign</strong>. Figures below use cleaned promo codes (see next section). Attributed revenue overstates incrementality — some buyers would have come anyway — so the reallocation lever is discounted to <span data-fill="levers.2.detail.incrementality" data-fmt="pct0">25%</span> incremental.</p>
 
-  <div class="hbars" role="img" aria-label="Bar chart of net revenue per dollar of spend by campaign, from VIP Love Letter at $29.28 down to Retarget Blitz at $0.">
-    <div class="rlabel">VIP Love Letter<small>email · $120 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:72%" tabindex="0" data-tip="VIP Love Letter — $29.28 net per $1 · $3,513 attributed · 84 tickets · skews VIP tier"></div><span class="val">$29.28</span><span class="flag good">● best return</span></div>
+  <div class="hbars" data-chart="rpd" role="img" aria-label="Bar chart of net revenue per dollar of spend by campaign, best to worst, with untracked campaigns at zero."></div>
 
-    <div class="rlabel">Summer Kickoff<small>instagram · $1,800 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:59.2%" tabindex="0" data-tip="Summer Kickoff — $24.10 net per $1 · $43,371 attributed · 1,007 tickets · the volume leader"></div><span class="val">$24.10</span></div>
-
-    <div class="rlabel">Encore Newsletter<small>email · $150 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:56.6%" tabindex="0" data-tip="Encore Newsletter — $23.01 net per $1 · $3,452 attributed · 77 tickets"></div><span class="val">$23.01</span></div>
-
-    <div class="rlabel">Search Brand<small>google search · $700 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:55%" tabindex="0" data-tip="Search Brand — $22.37 net per $1 · $15,656 attributed · 382 tickets"></div><span class="val">$22.37</span></div>
-
-    <div class="rlabel">Student Rush<small>street team · $300 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:54.3%" tabindex="0" data-tip="Student Rush — $22.08 net per $1 · $6,623 attributed · 157 tickets"></div><span class="val">$22.08</span></div>
-
-    <div class="rlabel">Partner Playlist<small>youtube · $500 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:43.3%" tabindex="0" data-tip="Partner Playlist — $17.62 net per $1 · $8,809 attributed · 203 tickets"></div><span class="val">$17.62</span></div>
-
-    <div class="rlabel">Radio Week<small>radio · $2,400 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:43.1%" tabindex="0" data-tip="Radio Week — $17.55 net per $1 · $42,123 attributed · 972 tickets · the biggest budget line, middling efficiency"></div><span class="val">$17.55</span></div>
-
-    <div class="rlabel">Local Press Blast<small>email · $200 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:39.9%" tabindex="0" data-tip="Local Press Blast — $16.21 net per $1 · $3,242 attributed · 78 tickets"></div><span class="val">$16.21</span></div>
-
-    <div class="rlabel">Street Team Flyers<small>street team · $600 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:33.1%" tabindex="0" data-tip="Street Team Flyers — $13.48 net per $1 · $8,086 attributed · 191 tickets"></div><span class="val">$13.48</span></div>
-
-    <div class="rlabel">Genre Nights<small>instagram · $850 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:29.9%" tabindex="0" data-tip="Genre Nights — $12.17 net per $1 · $10,345 attributed · 235 tickets"></div><span class="val">$12.17</span></div>
-
-    <div class="rlabel">Last Call Push<small>instagram · $1,100 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:18.1%" tabindex="0" data-tip="Last Call Push — $7.34 net per $1 · $8,079 attributed · 187 tickets · ran Jul 1–8, after most buying had happened (see pacing, page 2)"></div><span class="val">$7.34</span><span class="flag serious">▲ worst tracked return</span></div>
-
-    <div class="rlabel">Retarget Blitz<small>facebook · $950 spend</small></div>
-    <div class="rbar"><div class="bar" style="width:0.3%" tabindex="0" data-tip="Retarget Blitz — $950 spent, zero orders attributed: the campaign ran with no promo code, so code-based attribution cannot see it at all"></div><span class="val">$0.00</span><span class="flag critical">✕ untracked — no promo code</span></div>
-  </div>
-
-  <p class="note">Organic (no code): $181,867 net across 1,937 orders — 54% of the season. Timing matters as much as channel: Last Call Push ran during the final week, but the pacing chart on page 2 shows 35% of the season sold in the first four days.</p>
+  <p class="note">Organic (no code): <span data-fill="attribution.organic_net" data-fmt="usd0">$181,867</span> net across <span data-fill="attribution.organic_orders" data-fmt="int">1,937</span> orders — <span data-fill="computed.organic_share" data-fmt="pct0">54%</span> of the season. Timing matters as much as channel: the worst tracked campaign ran during the final week, but the pacing chart on page 2 shows <span data-fill="derived.launch.first4_share" data-fmt="pct0">35%</span> of the season sold in the first four days.</p>
 
   <details class="tablewrap">
     <summary>View as table</summary>
-    <div class="scroll">
-    <table class="data">
-      <tr><th>Campaign</th><th>Channel</th><th>Spend</th><th>Orders</th><th>Tickets</th><th>Attributed net</th><th>Net per $1</th></tr>
-      <tr><td>VIP Love Letter</td><td>email</td><td>$120</td><td>41</td><td>84</td><td>$3,513</td><td>$29.28</td></tr>
-      <tr><td>Summer Kickoff</td><td>instagram</td><td>$1,800</td><td>472</td><td>1,007</td><td>$43,371</td><td>$24.10</td></tr>
-      <tr><td>Encore Newsletter</td><td>email</td><td>$150</td><td>36</td><td>77</td><td>$3,452</td><td>$23.01</td></tr>
-      <tr><td>Search Brand</td><td>google search</td><td>$700</td><td>180</td><td>382</td><td>$15,656</td><td>$22.37</td></tr>
-      <tr><td>Student Rush</td><td>street team</td><td>$300</td><td>78</td><td>157</td><td>$6,623</td><td>$22.08</td></tr>
-      <tr><td>Partner Playlist</td><td>youtube</td><td>$500</td><td>90</td><td>203</td><td>$8,809</td><td>$17.62</td></tr>
-      <tr><td>Radio Week</td><td>radio</td><td>$2,400</td><td>454</td><td>972</td><td>$42,123</td><td>$17.55</td></tr>
-      <tr><td>Local Press Blast</td><td>email</td><td>$200</td><td>41</td><td>78</td><td>$3,242</td><td>$16.21</td></tr>
-      <tr><td>Street Team Flyers</td><td>street team</td><td>$600</td><td>91</td><td>191</td><td>$8,086</td><td>$13.48</td></tr>
-      <tr><td>Genre Nights</td><td>instagram</td><td>$850</td><td>109</td><td>235</td><td>$10,345</td><td>$12.17</td></tr>
-      <tr><td>Last Call Push</td><td>instagram</td><td>$1,100</td><td>89</td><td>187</td><td>$8,079</td><td>$7.34</td></tr>
-      <tr><td>Retarget Blitz</td><td>facebook</td><td>$950</td><td>0</td><td>0</td><td>$0</td><td>$0.00</td></tr>
-      <tr><td>(organic — no code)</td><td>—</td><td>$0</td><td>1,937</td><td>4,172</td><td>$181,867</td><td>—</td></tr>
-    </table>
-    </div>
+    <div class="scroll"><table class="data" data-table="campaigns"></table></div>
   </details>
 </section>
 
 <section class="card" id="attribution">
-  <h2>First, fix the measurement: $13,703 was credited to nobody</h2>
-  <p class="lede">150 orders carried mistyped promo codes (<code>' SUMMER25'</code>, <code>'vipnight'</code>, …) and matched no campaign, so the season's official report crowned <strong>Radio Week</strong> best-by-revenue and missed VIP Love Letter entirely. Normalizing the codes (trim + uppercase in <code>stg_orders</code> — the pipeline's README Step 5) reassigns all $13,703 and changes the answer: <strong>Summer Kickoff</strong> leads on revenue and <strong>VIP Love Letter</strong> leads on efficiency. Do this before moving any budget.</p>
+  <h2>First, fix the measurement: <span data-fill="attribution.unattributed_dirty_net" data-fmt="usd0">$13,703</span> was credited to nobody</h2>
+  <p class="lede"><span data-fill="attribution.unattributed_dirty_orders">150</span> orders carried mistyped promo codes (<code>' SUMMER25'</code>, <code>'vipnight'</code>, …) and matched no campaign, so the as-recorded leaderboard crowned <strong data-fill="derived.best_by_revenue_dirty">Radio Week</strong> best-by-revenue. Normalizing the codes (trim + uppercase in <code>stg_orders</code> — the pipeline's README Step 5) reassigns the missing revenue and changes the answer: <strong data-fill="derived.best_by_revenue_clean">Summer Kickoff</strong> leads on revenue and <strong data-fill="derived.best_campaign.name">VIP Love Letter</strong> leads on efficiency. Do this before moving any budget.</p>
 
   <div class="legend">
     <span class="key"><span class="swatch" style="background:var(--s1-soft)"></span>as recorded (dirty codes)</span>
     <span class="key"><span class="swatch" style="background:var(--s1)"></span>after code cleanup</span>
   </div>
 
-  <div class="dumbbell" role="img" aria-label="Dumbbell chart of attributed net revenue before and after promo-code cleanup for the five most affected rows.">
-    <div class="drow">
-      <div class="rlabel">Summer Kickoff</div>
-      <div class="dtrack">
-        <span class="join" style="left:71.8%; width:16.9%"></span>
-        <span class="pt pre" style="left:71.8%" tabindex="0" data-tip="Summer Kickoff as recorded: $35,130 — ~90 of its orders had mangled codes"></span>
-        <span class="pt post" style="left:88.7%" tabindex="0" data-tip="Summer Kickoff after cleanup: $43,371 (+$8,241)"></span>
-        <span class="dval before" style="left:69.8%">$35.1K → $43.4K</span>
-      </div>
-    </div>
-    <div class="drow">
-      <div class="rlabel">Radio Week</div>
-      <div class="dtrack">
-        <span class="join" style="left:84.2%; width:1.9%"></span>
-        <span class="pt pre" style="left:84.2%" tabindex="0" data-tip="Radio Week as recorded: $41,183"></span>
-        <span class="pt post" style="left:86.1%" tabindex="0" data-tip="Radio Week after cleanup: $42,123 (+$940)"></span>
-        <span class="dval before" style="left:82.2%">$41.2K → $42.1K</span>
-      </div>
-    </div>
-    <div class="drow">
-      <div class="rlabel">Search Brand</div>
-      <div class="dtrack">
-        <span class="join" style="left:31.3%; width:0.7%"></span>
-        <span class="pt pre" style="left:31.3%" tabindex="0" data-tip="Search Brand as recorded: $15,308"></span>
-        <span class="pt post" style="left:32%" tabindex="0" data-tip="Search Brand after cleanup: $15,656 (+$348)"></span>
-        <span class="dval" style="left:34%">$15.3K → $15.7K</span>
-      </div>
-    </div>
-    <div class="drow">
-      <div class="rlabel">VIP Love Letter</div>
-      <div class="dtrack">
-        <span class="join" style="left:1.7%; width:5.5%"></span>
-        <span class="pt pre" style="left:1.7%" tabindex="0" data-tip="VIP Love Letter as recorded: $843 — 30 of its 41 orders had mangled codes, hiding the season's best return"></span>
-        <span class="pt post" style="left:7.2%" tabindex="0" data-tip="VIP Love Letter after cleanup: $3,513 (+$2,670) — 4.2× what was recorded"></span>
-        <span class="dval" style="left:9.5%">$843 → $3,513 (4.2×)</span>
-      </div>
-    </div>
-    <div class="drow">
-      <div class="rlabel">(unattributed)<small>150 dirty-code orders</small></div>
-      <div class="dtrack">
-        <span class="join" style="left:0%; width:28%"></span>
-        <span class="pt post" style="left:0%" tabindex="0" data-tip="Unattributed after cleanup: $0 — every dirty code reassigned to its campaign"></span>
-        <span class="pt pre" style="left:28%" tabindex="0" data-tip="Unattributed as recorded: $13,703 of net revenue matching no campaign"></span>
-        <span class="dval" style="left:30.5%">$13.7K → $0</span>
-      </div>
-    </div>
-  </div>
+  <div class="dumbbell" data-chart="dumbbell" role="img" aria-label="Dumbbell chart of attributed net revenue before and after promo-code cleanup for the most affected campaigns."></div>
 
-  <p class="note">Also invisible to code attribution: Retarget Blitz ($950, no code at all). Next season, every campaign ships with a canonical code, and order forms normalize codes at entry — otherwise the budget reallocation below optimizes against noise.</p>
+  <p class="note">Also invisible to code attribution: <span data-fill="derived.untracked_campaign.name">Retarget Blitz</span> (<span data-fill="derived.untracked_campaign.spend" data-fmt="usd0">$950</span>, no code at all). Next season, every campaign ships with a canonical code, and order forms normalize codes at entry — otherwise the budget reallocation below optimizes against noise.</p>
 </section>
 
 <section class="card">
   <h2>Attendance: sold is not the same as showed up</h2>
-  <p class="lede">1,182 sold tickets never crossed a gate (16.4% of kept tickets). Ticket revenue is already banked, but empty seats forfeit bar and concession spend and erode repeat business. Static Bloom is the outlier — 12 points below the house average of 83.6%.</p>
+  <p class="lede"><span data-fill="derived.attendance.no_shows" data-fmt="int">1,182</span> sold tickets never crossed a gate. Ticket revenue is already banked, but empty seats forfeit bar and concession spend and erode repeat business. <span data-fill="derived.attendance.worst.name">Static Bloom</span> is the outlier — <span data-fill="derived.attendance.worst.delta_pts" data-fmt="pts0">12 pts</span> below the house average of <span data-fill="derived.attendance.avg_rate" data-fmt="pct1">83.6%</span>.</p>
 
-  <div class="hbars" role="img" aria-label="Bar chart of show-up rate by night, chronological. House average 83.6%; Static Bloom lowest at 71.4%.">
-    <div class="rlabel">Jul 1 · Midnight Standard</div>
-    <div class="rbar"><div class="bar" style="width:67.4%" tabindex="0" data-tip="The Midnight Standard — 84.3% show-up · 764 of 906 kept tickets scanned · 142 no-shows"></div><span class="val">84.3%</span></div>
-    <div class="rlabel">Jul 2 · Copper &amp; Oak</div>
-    <div class="rbar"><div class="bar" style="width:66.6%" tabindex="0" data-tip="Copper &amp; Oak — 83.2% show-up · 681 of 819 · 138 no-shows"></div><span class="val">83.2%</span></div>
-    <div class="rlabel">Jul 3 · Glass Anthem</div>
-    <div class="rbar"><div class="bar" style="width:67%" tabindex="0" data-tip="Glass Anthem — 83.7% show-up · 416 of 497 · 81 no-shows"></div><span class="val">83.7%</span></div>
-    <div class="rlabel">Jul 4 · Brasswork Riot</div>
-    <div class="rbar"><div class="bar" style="width:69.7%" tabindex="0" data-tip="Brasswork Riot — 87.1% show-up · 911 of 1,046 · 135 no-shows"></div><span class="val">87.1%</span></div>
-    <div class="rlabel">Jul 5 · Neon Coyote</div>
-    <div class="rbar"><div class="bar" style="width:68.9%" tabindex="0" data-tip="Neon Coyote — 86.1% show-up · 958 of 1,113 · 155 no-shows on a sold-out night: releasable inventory"></div><span class="val">86.1%</span></div>
-    <div class="rlabel">Jul 6 · Laugh Track Live</div>
-    <div class="rbar"><div class="bar" style="width:71.8%" tabindex="0" data-tip="Laugh Track Live — 89.7% show-up · 866 of 965 · 99 no-shows — the season's best"></div><span class="val">89.7%</span><span class="flag good">● best</span></div>
-    <div class="rlabel">Jul 7 · Static Bloom</div>
-    <div class="rbar"><div class="bar" style="width:57.1%" tabindex="0" data-tip="Static Bloom — 71.4% show-up · 635 of 889 · 254 no-shows, more than double the house median"></div><span class="val">71.4%</span><span class="flag serious">▲ 12 pts below avg</span></div>
-    <div class="rlabel">Jul 8 · Riverlight Orchestra</div>
-    <div class="rbar"><div class="bar" style="width:65.4%" tabindex="0" data-tip="Riverlight Orchestra — 81.8% show-up · 799 of 977 · 178 no-shows"></div><span class="val">81.8%</span></div>
-  </div>
+  <div class="hbars" data-chart="showup" role="img" aria-label="Bar chart of show-up rate by night, chronological, with the best and worst nights flagged."></div>
 
-  <p class="note">Upside not counted in the +5% bridge: Neon Coyote sold out and still had 155 empty seats. A day-of waitlist that re-releases confirmed no-shows at face value monetizes the same seat twice on sellout nights.</p>
+  <p class="note">Upside not counted in the +5% bridge: the sold-out night still had empty seats from no-shows. A day-of waitlist that re-releases confirmed no-shows at face value monetizes the same seat twice on sellout nights.</p>
 
   <details class="tablewrap">
     <summary>View as table</summary>
-    <div class="scroll">
-    <table class="data">
-      <tr><th>Event</th><th>Date</th><th>Kept tickets</th><th>Scanned</th><th>Show-up</th><th>No-shows</th></tr>
-      <tr><td>The Midnight Standard</td><td>Jul 1</td><td>906</td><td>764</td><td>84.3%</td><td>142</td></tr>
-      <tr><td>Copper &amp; Oak</td><td>Jul 2</td><td>819</td><td>681</td><td>83.2%</td><td>138</td></tr>
-      <tr><td>Glass Anthem</td><td>Jul 3</td><td>497</td><td>416</td><td>83.7%</td><td>81</td></tr>
-      <tr><td>Brasswork Riot</td><td>Jul 4</td><td>1,046</td><td>911</td><td>87.1%</td><td>135</td></tr>
-      <tr><td>Neon Coyote</td><td>Jul 5</td><td>1,113</td><td>958</td><td>86.1%</td><td>155</td></tr>
-      <tr><td>Laugh Track Live</td><td>Jul 6</td><td>965</td><td>866</td><td>89.7%</td><td>99</td></tr>
-      <tr><td>Static Bloom</td><td>Jul 7</td><td>889</td><td>635</td><td>71.4%</td><td>254</td></tr>
-      <tr><td>Riverlight Orchestra</td><td>Jul 8</td><td>977</td><td>799</td><td>81.8%</td><td>178</td></tr>
-    </table>
-    </div>
+    <div class="scroll"><table class="data" data-table="attendance"></table></div>
   </details>
 </section>
 
 <section class="card">
   <h2>The action plan on this page</h2>
   <ol class="actions">
-    <li><strong>Lever 3 — reallocate ~$2K of spend</strong> <span class="amount">≈ +$4,000 net</span>
-      <p>Cut Last Call Push ($1,100 at $7.34/$ — it ran after the buying window had mostly closed) and trim Genre Nights by ~$400 ($12.17/$). Redeploy into scaled-up versions of VIP Love Letter, Encore Newsletter, and Student Rush ($22–29/$), aimed at the launch window and at soft nights. Sized with a 25% incrementality haircut on the attributed delta.</p></li>
-    <li><strong>Lever 4 — exchange-first refund policy</strong> <span class="amount">≈ +$3,800 net</span>
-      <p>$25,637 (7.1% of gross) left as cash refunds. Default the refund flow to a swap-night or venue credit with a small fee for cash-out; converting 15% of leakage to retained revenue clears the estimate. Bonus: credits pull people back into the building, where concessions margin lives.</p></li>
-    <li><strong>Prerequisite — trustworthy attribution</strong> <span class="amount">$13,703 reassigned</span>
-      <p>Normalize promo codes in the pipeline (README Step 5), validate codes at checkout, and give every paid campaign a canonical code — including Retarget Blitz, whose $950 is currently unmeasurable. Re-run this report after the fix lands; the budget moves above depend on these numbers.</p></li>
-    <li><strong>Watch-item — Static Bloom's no-shows</strong>
-      <p>254 no-shows (28.6%) on one night. Send day-of reminders with door-time and transit info for late-week shows, and pilot the sellout-night waitlist re-release on the next Neon Coyote-calibre event.</p></li>
+    <li><strong>Lever 3 — reallocate ~<span data-fill="computed.realloc_moved" data-fmt="usd0">$2,000</span> of spend</strong> <span class="amount">≈ <span data-fill="levers.2.amount" data-fmt="plus_usd0">+$7,100</span> net</span>
+      <p>Cut <span data-fill="derived.worst_tracked_campaign.name">Last Call Push</span> (<span data-fill="derived.worst_tracked_campaign.spend" data-fmt="usd0">$1,100</span> at <span data-fill="derived.worst_tracked_campaign.rpd" data-fmt="usd2">$7.34</span>/$ — it ran after the buying window had mostly closed) and trim the next-worst channel. Redeploy into scaled-up versions of the top performers led by <span data-fill="derived.best_campaign.name">VIP Love Letter</span> (<span data-fill="derived.best_campaign.rpd" data-fmt="usd2">$29.28</span>/$), aimed at the launch window and at soft nights. Sized as <span data-fill="computed.realloc_moved" data-fmt="usd0">$2,000</span> moved from <span data-fill="levers.2.detail.source_rpd" data-fmt="usd2">$9.45</span>/$ channels to <span data-fill="levers.2.detail.target_rpd" data-fmt="usd2">$23.65</span>/$ channels, discounted to <span data-fill="levers.2.detail.incrementality" data-fmt="pct0">25%</span> incrementality.</p></li>
+    <li><strong>Lever 4 — exchange-first refund policy</strong> <span class="amount">≈ <span data-fill="levers.3.amount" data-fmt="plus_usd0">+$3,800</span> net</span>
+      <p><span data-fill="totals.refunded_rev" data-fmt="usd0">$25,637</span> (<span data-fill="totals.refund_share_of_gross" data-fmt="pct1">7.1%</span> of gross) left as cash refunds. Default the refund flow to a swap-night or venue credit with a small fee for cash-out; converting <span data-fill="computed.refund_convert_pct" data-fmt="pct0">15%</span> of leakage to retained revenue clears the estimate. Bonus: credits pull people back into the building, where concessions margin lives.</p></li>
+    <li><strong>Prerequisite — trustworthy attribution</strong> <span class="amount"><span data-fill="attribution.unattributed_dirty_net" data-fmt="usd0">$13,703</span> reassigned</span>
+      <p>Normalize promo codes in the pipeline (README Step 5), validate codes at checkout, and give every paid campaign a canonical code — including <span data-fill="derived.untracked_campaign.name">Retarget Blitz</span>, whose <span data-fill="derived.untracked_campaign.spend" data-fmt="usd0">$950</span> is currently unmeasurable. This page already computes attribution on cleaned codes; the staging fix makes the rest of the pipeline agree.</p></li>
+    <li><strong>Watch-item — <span data-fill="derived.attendance.worst.name">Static Bloom</span>'s no-shows</strong>
+      <p><span data-fill="derived.attendance.worst.no_shows" data-fmt="int">254</span> no-shows on one night. Send day-of reminders with door-time and transit info for late-week shows, and pilot the sellout-night waitlist re-release on the next sellout-calibre event.</p></li>
   </ol>
 </section>
 
@@ -212,6 +84,8 @@
 </div>
 
 </main>
+<script src="data.js"></script>
+<script src="render.js"></script>
 <script src="report.js"></script>
 </body>
 </html>

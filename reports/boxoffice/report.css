@@ -215,8 +215,9 @@ ol.actions li { margin-bottom: 10px; }
 ol.actions .amount { font-weight: 650; color: var(--good); white-space: nowrap; }
 ol.actions p { margin: 2px 0 0; font-size: 13px; color: var(--ink-2); }
 
-.pagefoot { display: flex; justify-content: space-between; gap: 12px; margin-top: 30px; font-size: 13.5px; }
+.pagefoot { display: flex; justify-content: space-between; gap: 12px; margin-top: 30px; font-size: 13.5px; flex-wrap: wrap; }
 .pagefoot a { font-weight: 600; text-decoration: none; }
+.pagefoot .datastamp { color: var(--muted); font-size: 12.5px; }
 
 /* On narrow screens the inline flags don't fit beside bars; their content is
    also in the tooltips, tables, and prose, so hide them rather than overflow. */

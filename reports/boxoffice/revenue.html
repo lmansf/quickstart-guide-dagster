@@ -9,7 +9,7 @@
 <body>
 
 <header class="masthead">
-  <div class="venue">Cadence Hall · Box office report · Summer season, July 1–8 2025</div>
+  <div class="venue">Cadence Hall · Box office report · <span data-fill="season.label">Summer season, July 1–8 2025</span></div>
   <h1>The revenue engine</h1>
   <p class="sub">Page 2 of 3 — what each night earned, where the house sells out, and where seats went unsold.</p>
   <nav class="pages" aria-label="Report pages">
@@ -17,81 +17,37 @@
     <a href="revenue.html" aria-current="page">2 · The revenue engine</a>
     <a href="marketing.html">3 · Marketing &amp; attendance</a>
   </nav>
-  <p class="goal"><strong>Season goal: maximize profit.</strong> This page carries two of the four levers: <strong>rescue the soft night (+$8,400)</strong> and <strong>reprice VIP (+$4,500)</strong> — $12.9K of the $16.8K gap.</p>
+  <p class="goal"><strong>Season goal: maximize profit.</strong> This page carries two of the four levers: <strong>rescue the soft night (<span data-fill="levers.0.amount" data-fmt="plus_usd0">+$8,300</span>)</strong> and <strong>reprice VIP (<span data-fill="levers.1.amount" data-fmt="plus_usd0">+$4,900</span>)</strong> — <span data-fill="computed.page2_levers_sum" data-fmt="usdk">$13.2K</span> of the <span data-fill="goal.gap" data-fmt="usdk">$16.8K</span> gap.</p>
 </header>
 
 <main>
 
 <section class="card">
   <h2>Net revenue by night</h2>
-  <p class="lede">The best night out-earned the worst 3-to-1 on identical capacity and overhead. Closing even half of that spread is the single largest profit lever the venue has.</p>
+  <p class="lede">The best night out-earned the worst <span data-fill="derived.best_worst_ratio" data-fmt="x1">3.0×</span> on identical capacity and overhead. Closing even half of that spread is the single largest profit lever the venue has.</p>
 
-  <div class="hbars" role="img" aria-label="Bar chart of net revenue by event, best to worst: Neon Coyote $56,314 down to Glass Anthem $18,742.">
-    <div class="rlabel">Neon Coyote<small>electronic · Sat Jul 5</small></div>
-    <div class="rbar"><div class="bar" style="width:76%" tabindex="0" data-tip="Neon Coyote — $56,314 net · 1,200 tickets (sold out) · $4,186 refunded"></div><span class="val">$56,314</span><span class="flag good">● sold out</span></div>
+  <div class="hbars" data-chart="revenue-by-event" role="img" aria-label="Bar chart of net revenue by event, best to worst."></div>
 
-    <div class="rlabel">Riverlight Orchestra<small>classical · Tue Jul 8</small></div>
-    <div class="rbar"><div class="bar" style="width:73.3%" tabindex="0" data-tip="Riverlight Orchestra — $54,261 net · 1,057 tickets (88%) · $4,904 refunded · highest prices of the season"></div><span class="val">$54,261</span></div>
-
-    <div class="rlabel">Brasswork Riot<small>funk · Fri Jul 4</small></div>
-    <div class="rbar"><div class="bar" style="width:68.5%" tabindex="0" data-tip="Brasswork Riot — $50,716 net · 1,117 tickets (93%) · $3,764 refunded"></div><span class="val">$50,716</span></div>
-
-    <div class="rlabel">Laugh Track Live<small>comedy · Sun Jul 6</small></div>
-    <div class="rbar"><div class="bar" style="width:59%" tabindex="0" data-tip="Laugh Track Live — $43,708 net · 1,021 tickets (85%) · $2,602 refunded"></div><span class="val">$43,708</span></div>
-
-    <div class="rlabel">The Midnight Standard<small>jazz · Tue Jul 1</small></div>
-    <div class="rbar"><div class="bar" style="width:55.2%" tabindex="0" data-tip="The Midnight Standard — $40,900 net · 984 tickets (82%) · $3,536 refunded"></div><span class="val">$40,900</span></div>
-
-    <div class="rlabel">Static Bloom<small>punk · Mon Jul 7</small></div>
-    <div class="rbar"><div class="bar" style="width:50.5%" tabindex="0" data-tip="Static Bloom — $37,412 net · 937 tickets (78%) · $1,914 refunded · also the worst show-up rate, see page 3"></div><span class="val">$37,412</span></div>
-
-    <div class="rlabel">Copper &amp; Oak<small>folk · Wed Jul 2</small></div>
-    <div class="rbar"><div class="bar" style="width:44.7%" tabindex="0" data-tip="Copper &amp; Oak — $33,113 net · 889 tickets (74%) · $2,949 refunded"></div><span class="val">$33,113</span></div>
-
-    <div class="rlabel">Glass Anthem<small>indie · Thu Jul 3</small></div>
-    <div class="rbar"><div class="bar" style="width:25.3%" tabindex="0" data-tip="Glass Anthem — $18,742 net · 540 tickets (45%) · 660 seats never sold"></div><span class="val">$18,742</span><span class="flag serious">▲ the soft night</span></div>
-  </div>
-
-  <p class="note">Bars are net revenue (refunds zeroed). Season total $335,166 net on $360,803 gross.</p>
+  <p class="note">Bars are net revenue (refunds zeroed). Season total <span data-fill="totals.net" data-fmt="usd0">$335,166</span> net on <span data-fill="totals.gross" data-fmt="usd0">$360,803</span> gross.</p>
 
   <details class="tablewrap">
     <summary>View as table</summary>
-    <div class="scroll">
-    <table class="data">
-      <tr><th>Event</th><th>Date</th><th>Tickets</th><th>Sell-through</th><th>Gross</th><th>Refunded</th><th>Net</th></tr>
-      <tr><td>Neon Coyote</td><td>Jul 5</td><td>1,200</td><td>100%</td><td>$60,500</td><td>$4,186</td><td>$56,314</td></tr>
-      <tr><td>Riverlight Orchestra</td><td>Jul 8</td><td>1,057</td><td>88%</td><td>$59,165</td><td>$4,904</td><td>$54,261</td></tr>
-      <tr><td>Brasswork Riot</td><td>Jul 4</td><td>1,117</td><td>93%</td><td>$54,480</td><td>$3,764</td><td>$50,716</td></tr>
-      <tr><td>Laugh Track Live</td><td>Jul 6</td><td>1,021</td><td>85%</td><td>$46,310</td><td>$2,602</td><td>$43,708</td></tr>
-      <tr><td>The Midnight Standard</td><td>Jul 1</td><td>984</td><td>82%</td><td>$44,436</td><td>$3,536</td><td>$40,900</td></tr>
-      <tr><td>Static Bloom</td><td>Jul 7</td><td>937</td><td>78%</td><td>$39,326</td><td>$1,914</td><td>$37,412</td></tr>
-      <tr><td>Copper &amp; Oak</td><td>Jul 2</td><td>889</td><td>74%</td><td>$36,062</td><td>$2,949</td><td>$33,113</td></tr>
-      <tr><td>Glass Anthem</td><td>Jul 3</td><td>540</td><td>45%</td><td>$20,524</td><td>$1,782</td><td>$18,742</td></tr>
-    </table>
-    </div>
+    <div class="scroll"><table class="data" data-table="events"></table></div>
   </details>
 </section>
 
 <section class="card">
   <h2>Sell-through vs. the 1,200-seat house</h2>
-  <p class="lede">Lever 1 — <strong>rescue the soft night (+$8,400)</strong>. Glass Anthem left 660 seats empty; every other night sold at least 74%. Getting the weakest booking to just 65% sell-through — still below this season's second-worst night — adds ~240 tickets at ~$35 average net.</p>
+  <p class="lede">Lever 1 — <strong>rescue the soft night (<span data-fill="levers.0.amount" data-fmt="plus_usd0">+$8,300</span>)</strong>. <span data-fill="derived.worst_event.name">Glass Anthem</span> left <span data-fill="derived.worst_event.unsold_seats" data-fmt="int">660</span> seats empty at <span data-fill="derived.worst_event.sell_through" data-fmt="pct0">45%</span> sell-through. Getting the weakest booking to just <span data-fill="computed.soft_target_pct" data-fmt="pct0">65%</span> — still below every other night this season — adds ~<span data-fill="levers.0.detail.add_tickets" data-fmt="int">240</span> tickets at ~<span data-fill="levers.0.detail.avg_net_per_ticket" data-fmt="usd0">$35</span> average net.</p>
 
-  <div role="img" aria-label="Meters of sell-through by night, chronological: 82, 74, 45, 93, 100, 85, 78, 88 percent.">
-    <div class="meter-row"><div class="rlabel">Jul 1 · Midnight Standard</div><div class="meter" tabindex="0" data-tip="984 of 1,200 seats sold (82%)"><i style="width:82%"></i></div><div class="val">984 · 82%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 2 · Copper &amp; Oak</div><div class="meter" tabindex="0" data-tip="889 of 1,200 seats sold (74%)"><i style="width:74%"></i></div><div class="val">889 · 74%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 3 · Glass Anthem</div><div class="meter" tabindex="0" data-tip="540 of 1,200 seats sold (45%) — 660 seats unsold, the season's largest untapped inventory"><i style="width:45%"></i></div><div class="val">540 · 45% ▲</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 4 · Brasswork Riot</div><div class="meter" tabindex="0" data-tip="1,117 of 1,200 seats sold (93%)"><i style="width:93%"></i></div><div class="val">1,117 · 93%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 5 · Neon Coyote</div><div class="meter" tabindex="0" data-tip="1,200 of 1,200 seats sold — the season's only full sellout"><i class="full" style="width:100%"></i></div><div class="val">1,200 · 100%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 6 · Laugh Track Live</div><div class="meter" tabindex="0" data-tip="1,021 of 1,200 seats sold (85%)"><i style="width:85%"></i></div><div class="val">1,021 · 85%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 7 · Static Bloom</div><div class="meter" tabindex="0" data-tip="937 of 1,200 seats sold (78%)"><i style="width:78%"></i></div><div class="val">937 · 78%</div></div>
-    <div class="meter-row"><div class="rlabel">Jul 8 · Riverlight Orchestra</div><div class="meter" tabindex="0" data-tip="1,057 of 1,200 seats sold (88%)"><i style="width:88%"></i></div><div class="val">1,057 · 88%</div></div>
-  </div>
-  <p class="note">How to act on it: book the Thursday slot against demand signals (electronic and classical out-drew indie by 2× at higher prices), and give the soft night the early-window push — page 3 shows the launch window is where tickets actually sell.</p>
+  <div data-chart="sellthrough" role="img" aria-label="Meters of sell-through by night, chronological."></div>
+
+  <p class="note">How to act on it: book the weak slot against demand signals (the top-grossing genres out-drew it 2× at higher prices), and give the soft night the early-window push — the pacing chart below shows the launch window is where tickets actually sell.</p>
 </section>
 
 <section class="card">
   <h2>Tier mix: VIP is capped, not weak</h2>
-  <p class="lede">Lever 2 — <strong>reprice / expand VIP (+$4,500)</strong>. VIP is the smallest bar on every row below, but that's a supply ceiling, not soft demand: VIP's 100 seats sold out on 6 of 8 nights. When a tier sells out almost every night, it is underpriced. A 10% VIP price increase on sellout-calibre nights (~$44.7K of VIP net) yields ~$4,500 with no extra cost; adding 20 VIP seats where the room allows is worth roughly the same again.</p>
+  <p class="lede">Lever 2 — <strong>reprice / expand VIP (<span data-fill="levers.1.amount" data-fmt="plus_usd0">+$4,900</span>)</strong>. VIP is the smallest bar on every row below, but that's a supply ceiling, not soft demand: VIP's 100 seats sold out on <span data-fill="derived.vip_sellout_nights">6</span> of 8 nights. When a tier sells out almost every night, it is underpriced. A <span data-fill="computed.vip_lift_pct" data-fmt="pct0">10%</span> VIP price increase on sellout-calibre nights (<span data-fill="levers.1.detail.vip_net_on_sellouts" data-fmt="usdk">$48.7K</span> of VIP net) yields the estimate with no extra cost; adding 20 VIP seats where the room allows is worth roughly the same again.</p>
 
   <div class="legend">
     <span class="key"><span class="swatch" style="background:var(--s1)"></span>GA (800 seats)</span>
@@ -99,156 +55,25 @@
     <span class="key"><span class="swatch" style="background:var(--s3)"></span>VIP (100 seats)</span>
   </div>
 
-  <div class="hbars" role="img" aria-label="Stacked bars of net revenue by tier for each night. Season totals: GA $173,865, Balcony $102,532, VIP $58,769.">
-    <div class="rlabel">Neon Coyote</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:41.2%" tabindex="0" data-tip="Neon Coyote GA — $30,954 net · 800/800 sold (cap)"></div>
-      <div class="seg t-bal" style="width:21.6%" tabindex="0" data-tip="Neon Coyote Balcony — $16,240 net · 300/300 sold (cap)"></div>
-      <div class="seg t-vip last" style="width:12.1%" tabindex="0" data-tip="Neon Coyote VIP — $9,120 net · 100/100 sold (cap)"></div>
-      <span class="val">$56.3K</span>
-    </div>
+  <div class="hbars" data-chart="tiers" role="img" aria-label="Stacked bars of net revenue by tier for each night."></div>
 
-    <div class="rlabel">Riverlight Orchestra</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:37%" tabindex="0" data-tip="Riverlight Orchestra GA — $27,765 net · 657/800 sold"></div>
-      <div class="seg t-bal" style="width:22.5%" tabindex="0" data-tip="Riverlight Orchestra Balcony — $16,926 net · 300/300 sold (cap)"></div>
-      <div class="seg t-vip last" style="width:12.8%" tabindex="0" data-tip="Riverlight Orchestra VIP — $9,570 net · 100/100 sold (cap) at $110 — the season's highest VIP price still sold out"></div>
-      <span class="val">$54.3K</span>
-    </div>
-
-    <div class="rlabel">Brasswork Riot</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:35.9%" tabindex="0" data-tip="Brasswork Riot GA — $26,960 net · 717/800 sold"></div>
-      <div class="seg t-bal" style="width:21.3%" tabindex="0" data-tip="Brasswork Riot Balcony — $16,016 net · 300/300 sold (cap)"></div>
-      <div class="seg t-vip last" style="width:10.3%" tabindex="0" data-tip="Brasswork Riot VIP — $7,740 net · 100/100 sold (cap)"></div>
-      <span class="val">$50.7K</span>
-    </div>
-
-    <div class="rlabel">Laugh Track Live</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:30.9%" tabindex="0" data-tip="Laugh Track Live GA — $23,218 net · 645/800 sold"></div>
-      <div class="seg t-bal" style="width:17.4%" tabindex="0" data-tip="Laugh Track Live Balcony — $13,050 net · 276/300 sold"></div>
-      <div class="seg t-vip last" style="width:9.9%" tabindex="0" data-tip="Laugh Track Live VIP — $7,440 net · 100/100 sold (cap)"></div>
-      <span class="val">$43.7K</span>
-    </div>
-
-    <div class="rlabel">Midnight Standard</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:27.7%" tabindex="0" data-tip="The Midnight Standard GA — $20,808 net · 627/800 sold"></div>
-      <div class="seg t-bal" style="width:16.3%" tabindex="0" data-tip="The Midnight Standard Balcony — $12,272 net · 257/300 sold"></div>
-      <div class="seg t-vip last" style="width:10.4%" tabindex="0" data-tip="The Midnight Standard VIP — $7,820 net · 100/100 sold (cap)"></div>
-      <span class="val">$40.9K</span>
-    </div>
-
-    <div class="rlabel">Static Bloom</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:24.5%" tabindex="0" data-tip="Static Bloom GA — $18,428 net · 575/800 sold"></div>
-      <div class="seg t-bal" style="width:16%" tabindex="0" data-tip="Static Bloom Balcony — $12,000 net · 262/300 sold"></div>
-      <div class="seg t-vip last" style="width:9.3%" tabindex="0" data-tip="Static Bloom VIP — $6,984 net · 100/100 sold (cap)"></div>
-      <span class="val">$37.4K</span>
-    </div>
-
-    <div class="rlabel">Copper &amp; Oak</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:21.6%" tabindex="0" data-tip="Copper &amp; Oak GA — $16,192 net · 544/800 sold"></div>
-      <div class="seg t-bal" style="width:13.8%" tabindex="0" data-tip="Copper &amp; Oak Balcony — $10,396 net · 249/300 sold"></div>
-      <div class="seg t-vip last" style="width:8.7%" tabindex="0" data-tip="Copper &amp; Oak VIP — $6,525 net · 96/100 sold"></div>
-      <span class="val">$33.1K</span>
-    </div>
-
-    <div class="rlabel">Glass Anthem</div>
-    <div class="rbar stack">
-      <div class="seg t-ga" style="width:12.7%" tabindex="0" data-tip="Glass Anthem GA — $9,540 net · 337/800 sold"></div>
-      <div class="seg t-bal" style="width:7.5%" tabindex="0" data-tip="Glass Anthem Balcony — $5,632 net · 146/300 sold"></div>
-      <div class="seg t-vip last" style="width:4.8%" tabindex="0" data-tip="Glass Anthem VIP — $3,570 net · 57/100 sold — the only night VIP demand was genuinely soft"></div>
-      <span class="val">$18.7K</span>
-    </div>
-  </div>
-
-  <p class="note">Season totals: GA $173,865 (4,902 tickets) · Balcony $102,532 (2,090) · VIP $58,769 (753). Balcony also hit its 300-seat cap on 3 nights — the same logic applies there at smaller scale.</p>
+  <p class="note">Season totals: GA <span data-fill="derived.tier_totals.GA.net" data-fmt="usd0">$173,865</span> (<span data-fill="derived.tier_totals.GA.sold" data-fmt="int">4,902</span> tickets) · Balcony <span data-fill="derived.tier_totals.Balcony.net" data-fmt="usd0">$102,532</span> (<span data-fill="derived.tier_totals.Balcony.sold" data-fmt="int">2,090</span>) · VIP <span data-fill="derived.tier_totals.VIP.net" data-fmt="usd0">$58,769</span> (<span data-fill="derived.tier_totals.VIP.sold" data-fmt="int">753</span>). Balcony also hit its 300-seat cap on <span data-fill="derived.balcony_sellout_nights">3</span> nights — the same logic applies there at smaller scale.</p>
 
   <details class="tablewrap">
     <summary>View as table</summary>
-    <div class="scroll">
-    <table class="data">
-      <tr><th>Event</th><th>GA net</th><th>GA sold</th><th>Balcony net</th><th>Balcony sold</th><th>VIP net</th><th>VIP sold</th></tr>
-      <tr><td>Neon Coyote</td><td>$30,954</td><td>800/800</td><td>$16,240</td><td>300/300</td><td>$9,120</td><td>100/100</td></tr>
-      <tr><td>Riverlight Orchestra</td><td>$27,765</td><td>657/800</td><td>$16,926</td><td>300/300</td><td>$9,570</td><td>100/100</td></tr>
-      <tr><td>Brasswork Riot</td><td>$26,960</td><td>717/800</td><td>$16,016</td><td>300/300</td><td>$7,740</td><td>100/100</td></tr>
-      <tr><td>Laugh Track Live</td><td>$23,218</td><td>645/800</td><td>$13,050</td><td>276/300</td><td>$7,440</td><td>100/100</td></tr>
-      <tr><td>The Midnight Standard</td><td>$20,808</td><td>627/800</td><td>$12,272</td><td>257/300</td><td>$7,820</td><td>100/100</td></tr>
-      <tr><td>Static Bloom</td><td>$18,428</td><td>575/800</td><td>$12,000</td><td>262/300</td><td>$6,984</td><td>100/100</td></tr>
-      <tr><td>Copper &amp; Oak</td><td>$16,192</td><td>544/800</td><td>$10,396</td><td>249/300</td><td>$6,525</td><td>96/100</td></tr>
-      <tr><td>Glass Anthem</td><td>$9,540</td><td>337/800</td><td>$5,632</td><td>146/300</td><td>$3,570</td><td>57/100</td></tr>
-    </table>
-    </div>
+    <div class="scroll"><table class="data" data-table="tiers"></table></div>
   </details>
 </section>
 
 <section class="card">
   <h2>Sales pacing: the launch window does the heavy lifting</h2>
-  <p class="lede">Daily net revenue across the 18-day on-sale window. The first four days sold $116.8K — 35% of the season — before settling into a ~$16K/day trough. The lesson for next season: invest in the on-sale moment and the announce, and rescue soft nights early, while the buying window is still long.</p>
+  <p class="lede">Daily net revenue across the on-sale window. The first four days sold <span data-fill="derived.launch.first4_net" data-fmt="usdk">$116.8K</span> — <span data-fill="derived.launch.first4_share" data-fmt="pct0">35%</span> of the season — before settling into a trough. The lesson for next season: invest in the on-sale moment and the announce, and rescue soft nights early, while the buying window is still long.</p>
 
-  <figure class="linechart">
-    <svg viewBox="0 0 720 260" role="img" aria-label="Line chart of daily net revenue, June 20 to July 7. Starts at $39,430 on launch day, falls to a $16,000 trough, recovers modestly around July 3, then tails off to $5,550 as the season ends.">
-      <line class="svg-grid" x1="56" y1="16" x2="704" y2="16"/>
-      <line class="svg-grid" x1="56" y1="66.5" x2="704" y2="66.5"/>
-      <line class="svg-grid" x1="56" y1="117" x2="704" y2="117"/>
-      <line class="svg-grid" x1="56" y1="167.5" x2="704" y2="167.5"/>
-      <line class="svg-axis" x1="56" y1="218" x2="704" y2="218"/>
-      <text class="svg-tick" x="48" y="221" text-anchor="end">$0</text>
-      <text class="svg-tick" x="48" y="170.5" text-anchor="end">$10K</text>
-      <text class="svg-tick" x="48" y="120" text-anchor="end">$20K</text>
-      <text class="svg-tick" x="48" y="69.5" text-anchor="end">$30K</text>
-      <text class="svg-tick" x="48" y="19" text-anchor="end">$40K</text>
-      <text class="svg-tick" x="56" y="236" text-anchor="middle">Jun 20</text>
-      <text class="svg-tick" x="208.5" y="236" text-anchor="middle">Jun 24</text>
-      <text class="svg-tick" x="360.9" y="236" text-anchor="middle">Jun 28</text>
-      <text class="svg-tick" x="513.4" y="236" text-anchor="middle">Jul 2</text>
-      <text class="svg-tick" x="665.9" y="236" text-anchor="middle">Jul 6</text>
-      <path class="svg-area" d="M56,218 L56.0,18.9 L94.1,70.7 L132.2,93.2 L170.4,99.3 L208.5,132.5 L246.6,135.0 L284.7,137.7 L322.8,138.3 L360.9,137.9 L399.1,135.6 L437.2,117.0 L475.3,123.5 L513.4,131.2 L551.5,110.3 L589.6,126.9 L627.8,157.6 L665.9,175.8 L704.0,190.0 L704,218 Z"/>
-      <polyline class="svg-line" points="56.0,18.9 94.1,70.7 132.2,93.2 170.4,99.3 208.5,132.5 246.6,135.0 284.7,137.7 322.8,138.3 360.9,137.9 399.1,135.6 437.2,117.0 475.3,123.5 513.4,131.2 551.5,110.3 589.6,126.9 627.8,157.6 665.9,175.8 704.0,190.0"/>
-      <circle class="svg-dot" cx="56" cy="18.9" r="4.5"/>
-      <circle class="svg-dot" cx="704" cy="190" r="4.5"/>
-      <text class="svg-lab" x="66" y="24">$39.4K on-sale day</text>
-      <text class="svg-lab" x="696" y="182" text-anchor="end">$5.6K</text>
-      <circle class="svg-hit" cx="56.0" cy="18.9" r="12" tabindex="0" data-tip="Fri Jun 20 (on-sale day) — $39,430 net · 909 tickets"/>
-      <circle class="svg-hit" cx="94.1" cy="70.7" r="12" tabindex="0" data-tip="Sat Jun 21 — $29,161 net · 690 tickets"/>
-      <circle class="svg-hit" cx="132.2" cy="93.2" r="12" tabindex="0" data-tip="Sun Jun 22 — $24,708 net · 575 tickets"/>
-      <circle class="svg-hit" cx="170.4" cy="99.3" r="12" tabindex="0" data-tip="Mon Jun 23 — $23,499 net · 555 tickets"/>
-      <circle class="svg-hit" cx="208.5" cy="132.5" r="12" tabindex="0" data-tip="Tue Jun 24 — $16,930 net · 396 tickets"/>
-      <circle class="svg-hit" cx="246.6" cy="135.0" r="12" tabindex="0" data-tip="Wed Jun 25 — $16,434 net · 378 tickets"/>
-      <circle class="svg-hit" cx="284.7" cy="137.7" r="12" tabindex="0" data-tip="Thu Jun 26 — $15,901 net · 357 tickets"/>
-      <circle class="svg-hit" cx="322.8" cy="138.3" r="12" tabindex="0" data-tip="Fri Jun 27 — $15,779 net · 378 tickets"/>
-      <circle class="svg-hit" cx="360.9" cy="137.9" r="12" tabindex="0" data-tip="Sat Jun 28 — $15,867 net · 349 tickets"/>
-      <circle class="svg-hit" cx="399.1" cy="135.6" r="12" tabindex="0" data-tip="Sun Jun 29 — $16,313 net · 388 tickets"/>
-      <circle class="svg-hit" cx="437.2" cy="117.0" r="12" tabindex="0" data-tip="Mon Jun 30 — $20,005 net · 476 tickets"/>
-      <circle class="svg-hit" cx="475.3" cy="123.5" r="12" tabindex="0" data-tip="Tue Jul 1 — $18,718 net · 447 tickets"/>
-      <circle class="svg-hit" cx="513.4" cy="131.2" r="12" tabindex="0" data-tip="Wed Jul 2 — $17,193 net · 404 tickets"/>
-      <circle class="svg-hit" cx="551.5" cy="110.3" r="12" tabindex="0" data-tip="Thu Jul 3 — $21,329 net · 474 tickets"/>
-      <circle class="svg-hit" cx="589.6" cy="126.9" r="12" tabindex="0" data-tip="Fri Jul 4 — $18,043 net · 409 tickets"/>
-      <circle class="svg-hit" cx="627.8" cy="157.6" r="12" tabindex="0" data-tip="Sat Jul 5 — $11,951 net · 259 tickets"/>
-      <circle class="svg-hit" cx="665.9" cy="175.8" r="12" tabindex="0" data-tip="Sun Jul 6 — $8,355 net · 196 tickets"/>
-      <circle class="svg-hit" cx="704.0" cy="190.0" r="12" tabindex="0" data-tip="Mon Jul 7 — $5,550 net · 105 tickets"/>
-    </svg>
-  </figure>
+  <figure class="linechart" data-chart="daily" data-aria="Line chart of daily net revenue across the on-sale window: a large on-sale-day spike, a mid-window trough, and a tail-off as the season ends."></figure>
 
   <details class="tablewrap">
     <summary>View as table</summary>
-    <div class="scroll">
-    <table class="data">
-      <tr><th>Date</th><th>Net revenue</th><th>Tickets</th><th>Date</th><th>Net revenue</th><th>Tickets</th></tr>
-      <tr><td>Jun 20</td><td>$39,430</td><td>909</td><td>Jun 29</td><td>$16,313</td><td>388</td></tr>
-      <tr><td>Jun 21</td><td>$29,161</td><td>690</td><td>Jun 30</td><td>$20,005</td><td>476</td></tr>
-      <tr><td>Jun 22</td><td>$24,708</td><td>575</td><td>Jul 1</td><td>$18,718</td><td>447</td></tr>
-      <tr><td>Jun 23</td><td>$23,499</td><td>555</td><td>Jul 2</td><td>$17,193</td><td>404</td></tr>
-      <tr><td>Jun 24</td><td>$16,930</td><td>396</td><td>Jul 3</td><td>$21,329</td><td>474</td></tr>
-      <tr><td>Jun 25</td><td>$16,434</td><td>378</td><td>Jul 4</td><td>$18,043</td><td>409</td></tr>
-      <tr><td>Jun 26</td><td>$15,901</td><td>357</td><td>Jul 5</td><td>$11,951</td><td>259</td></tr>
-      <tr><td>Jun 27</td><td>$15,779</td><td>378</td><td>Jul 6</td><td>$8,355</td><td>196</td></tr>
-      <tr><td>Jun 28</td><td>$15,867</td><td>349</td><td>Jul 7</td><td>$5,550</td><td>105</td></tr>
-    </table>
-    </div>
+    <div class="scroll"><table class="data" data-table="daily"></table></div>
   </details>
 </section>
 
@@ -258,6 +83,8 @@
 </div>
 
 </main>
+<script src="data.js"></script>
+<script src="render.js"></script>
 <script src="report.js"></script>
 </body>
 </html>

@@ -5,9 +5,11 @@ import dagster as dg
 from cadence.resources import SCANS_DIR
 
 # The default "refresh the business" button: everything except the optional daily partitions.
+# "publishing" (the dashboard data export) rides along so a refresh republishes the report;
+# it is deliberately NOT in the test suite's core groups — it writes files into the repo.
 refresh_all_job = dg.define_asset_job(
     "refresh_all",
-    selection=dg.AssetSelection.groups("raw", "staging", "marts", "reporting"),
+    selection=dg.AssetSelection.groups("raw", "staging", "marts", "reporting", "publishing"),
 )
 
 # What the sensor kicks off: the scans entry point plus everything downstream of it.
