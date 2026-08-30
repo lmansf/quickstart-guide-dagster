@@ -1,0 +1,9 @@
+event_id,event_name,genre,event_date,capacity,doors_time,show_time
+EV-01,The Midnight Standard,jazz,2025-07-01,1200,19:00,20:00
+EV-02,Copper & Oak,folk,2025-07-02,1200,19:00,20:00
+EV-03,Glass Anthem,indie,2025-07-03,1200,19:00,20:00
+EV-04,Brasswork Riot,funk,2025-07-04,1200,19:00,20:00
+EV-05,Neon Coyote,electronic,2025-07-05,1200,19:00,20:00
+EV-06,Laugh Track Live,comedy,2025-07-06,1200,19:00,20:00
+EV-07,Static Bloom,punk,2025-07-07,1200,19:00,20:00
+EV-08,Riverlight Orchestra,classical,2025-07-08,1200,19:00,20:00

@@ -1,0 +1,13 @@
+campaign_id,name,channel,promo_code,spend_usd,starts_on,ends_on
+CMP-01,Summer Kickoff,instagram,SUMMER25,1800.00,2025-06-18,2025-07-08
+CMP-02,VIP Love Letter,email,VIPNIGHT,120.00,2025-06-20,2025-07-08
+CMP-03,Radio Week,radio,ONAIR10,2400.00,2025-06-20,2025-06-30
+CMP-04,Retarget Blitz,facebook,,950.00,2025-06-22,2025-07-08
+CMP-05,Search Brand,google_search,FINDUS,700.00,2025-06-20,2025-07-08
+CMP-06,Street Team Flyers,street_team,STREET15,600.00,2025-06-24,2025-07-06
+CMP-07,Local Press Blast,email,PRESSPLAY,200.00,2025-06-21,2025-07-02
+CMP-08,Genre Nights,instagram,GENREGEM,850.00,2025-06-25,2025-07-08
+CMP-09,Last Call Push,instagram,LASTCALL,1100.00,2025-07-01,2025-07-08
+CMP-10,Student Rush,street_team,STUDENT10,300.00,2025-06-20,2025-07-08
+CMP-11,Encore Newsletter,email,ENCORE,150.00,2025-06-20,2025-07-08
+CMP-12,Partner Playlist,youtube,PLAYLOUD,500.00,2025-06-23,2025-07-08
