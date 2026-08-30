@@ -109,7 +109,7 @@ section.card > .lede { margin: 0 0 18px; color: var(--ink-2); font-size: 13.5px;
 /* ---- hero + KPI tiles ---- */
 .hero-row { display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 18px; }
 .hero .label { font-size: 13px; color: var(--ink-2); }
-.hero .value { font-size: 52px; font-weight: 650; line-height: 1.2; letter-spacing: -0.01em; }
+.hero .value { font-size: 48px; font-weight: 650; line-height: 1.25; padding-right: 8px; }
 .hero .delta { font-size: 13.5px; color: var(--ink-2); margin-top: 2px; }
 .hero .delta b { color: var(--good); }
 .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
