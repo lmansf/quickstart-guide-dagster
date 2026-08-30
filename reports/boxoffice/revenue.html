@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadence Hall box office — 2 · The revenue engine</title>
+<link rel="stylesheet" href="report.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="venue">Cadence Hall · Box office report · <span data-fill="season.label">Summer season, July 1–8 2025</span></div>
+  <h1>The revenue engine</h1>
+  <p class="sub">Page 2 of 3 — what each night earned, where the house sells out, and where seats went unsold.</p>
+  <nav class="pages" aria-label="Report pages">
+    <a href="index.html">1 · Overview &amp; plan</a>
+    <a href="revenue.html" aria-current="page">2 · The revenue engine</a>
+    <a href="marketing.html">3 · Marketing &amp; attendance</a>
+  </nav>
+  <p class="goal"><strong>Season goal: maximize profit.</strong> This page carries two of the four levers: <strong>rescue the soft night (<span data-fill="levers.0.amount" data-fmt="plus_usd0">+$8,300</span>)</strong> and <strong>reprice VIP (<span data-fill="levers.1.amount" data-fmt="plus_usd0">+$4,900</span>)</strong> — <span data-fill="computed.page2_levers_sum" data-fmt="usdk">$13.2K</span> of the <span data-fill="goal.gap" data-fmt="usdk">$16.8K</span> gap.</p>
+</header>
+
+<main>
+
+<section class="card">
+  <h2>Net revenue by night</h2>
+  <p class="lede">The best night out-earned the worst <span data-fill="derived.best_worst_ratio" data-fmt="x1">3.0×</span> on identical capacity and overhead. Closing even half of that spread is the single largest profit lever the venue has.</p>
+
+  <div class="hbars" data-chart="revenue-by-event" role="img" aria-label="Bar chart of net revenue by event, best to worst."></div>
+
+  <p class="note">Bars are net revenue (refunds zeroed). Season total <span data-fill="totals.net" data-fmt="usd0">$335,166</span> net on <span data-fill="totals.gross" data-fmt="usd0">$360,803</span> gross.</p>
+
+  <details class="tablewrap">
+    <summary>View as table</summary>
+    <div class="scroll"><table class="data" data-table="events"></table></div>
+  </details>
+</section>
+
+<section class="card">
+  <h2>Sell-through vs. the 1,200-seat house</h2>
+  <p class="lede">Lever 1 — <strong>rescue the soft night (<span data-fill="levers.0.amount" data-fmt="plus_usd0">+$8,300</span>)</strong>. <span data-fill="derived.worst_event.name">Glass Anthem</span> left <span data-fill="derived.worst_event.unsold_seats" data-fmt="int">660</span> seats empty at <span data-fill="derived.worst_event.sell_through" data-fmt="pct0">45%</span> sell-through. Getting the weakest booking to just <span data-fill="computed.soft_target_pct" data-fmt="pct0">65%</span> — still below every other night this season — adds ~<span data-fill="levers.0.detail.add_tickets" data-fmt="int">240</span> tickets at ~<span data-fill="levers.0.detail.avg_net_per_ticket" data-fmt="usd0">$35</span> average net.</p>
+
+  <div data-chart="sellthrough" role="img" aria-label="Meters of sell-through by night, chronological."></div>
+
+  <p class="note">How to act on it: book the weak slot against demand signals (the top-grossing genres out-drew it 2× at higher prices), and give the soft night the early-window push — the pacing chart below shows the launch window is where tickets actually sell.</p>
+</section>
+
+<section class="card">
+  <h2>Tier mix: VIP is capped, not weak</h2>
+  <p class="lede">Lever 2 — <strong>reprice / expand VIP (<span data-fill="levers.1.amount" data-fmt="plus_usd0">+$4,900</span>)</strong>. VIP is the smallest bar on every row below, but that's a supply ceiling, not soft demand: VIP's 100 seats sold out on <span data-fill="derived.vip_sellout_nights">6</span> of 8 nights. When a tier sells out almost every night, it is underpriced. A <span data-fill="computed.vip_lift_pct" data-fmt="pct0">10%</span> VIP price increase on sellout-calibre nights (<span data-fill="levers.1.detail.vip_net_on_sellouts" data-fmt="usdk">$48.7K</span> of VIP net) yields the estimate with no extra cost; adding 20 VIP seats where the room allows is worth roughly the same again.</p>
+
+  <div class="legend">
+    <span class="key"><span class="swatch" style="background:var(--s1)"></span>GA (800 seats)</span>
+    <span class="key"><span class="swatch" style="background:var(--s2)"></span>Balcony (300 seats)</span>
+    <span class="key"><span class="swatch" style="background:var(--s3)"></span>VIP (100 seats)</span>
+  </div>
+
+  <div class="hbars" data-chart="tiers" role="img" aria-label="Stacked bars of net revenue by tier for each night."></div>
+
+  <p class="note">Season totals: GA <span data-fill="derived.tier_totals.GA.net" data-fmt="usd0">$173,865</span> (<span data-fill="derived.tier_totals.GA.sold" data-fmt="int">4,902</span> tickets) · Balcony <span data-fill="derived.tier_totals.Balcony.net" data-fmt="usd0">$102,532</span> (<span data-fill="derived.tier_totals.Balcony.sold" data-fmt="int">2,090</span>) · VIP <span data-fill="derived.tier_totals.VIP.net" data-fmt="usd0">$58,769</span> (<span data-fill="derived.tier_totals.VIP.sold" data-fmt="int">753</span>). Balcony also hit its 300-seat cap on <span data-fill="derived.balcony_sellout_nights">3</span> nights — the same logic applies there at smaller scale.</p>
+
+  <details class="tablewrap">
+    <summary>View as table</summary>
+    <div class="scroll"><table class="data" data-table="tiers"></table></div>
+  </details>
+</section>
+
+<section class="card">
+  <h2>Sales pacing: the launch window does the heavy lifting</h2>
+  <p class="lede">Daily net revenue across the on-sale window. The first four days sold <span data-fill="derived.launch.first4_net" data-fmt="usdk">$116.8K</span> — <span data-fill="derived.launch.first4_share" data-fmt="pct0">35%</span> of the season — before settling into a trough. The lesson for next season: invest in the on-sale moment and the announce, and rescue soft nights early, while the buying window is still long.</p>
+
+  <figure class="linechart" data-chart="daily" data-aria="Line chart of daily net revenue across the on-sale window: a large on-sale-day spike, a mid-window trough, and a tail-off as the season ends."></figure>
+
+  <details class="tablewrap">
+    <summary>View as table</summary>
+    <div class="scroll"><table class="data" data-table="daily"></table></div>
+  </details>
+</section>
+
+<div class="pagefoot">
+  <a href="index.html">← 1 · Overview &amp; plan</a>
+  <a href="marketing.html">Next: 3 · Marketing &amp; attendance →</a>
+</div>
+
+</main>
+<script src="data.js"></script>
+<script src="render.js"></script>
+<script src="report.js"></script>
+</body>
+</html>
