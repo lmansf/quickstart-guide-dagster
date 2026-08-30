@@ -16,9 +16,16 @@ from dagster_duckdb_pandas import DuckDBPandasIOManager
 
 from cadence import checks
 from cadence.assets import daily, marts, raw, report, staging
+from cadence.resources import RAW_DIR
 
 CORE_GROUPS = ("raw", "staging", "marts", "reporting")
 DB_FILENAME = "test.duckdb"
+
+STEP5_SKIP_REASON = (
+    "You've applied the README Step 5 promo-code fix in this working tree — nice. "
+    "This test documents the SHIPPED bug and only runs on a pristine checkout "
+    "(git restore cadence/assets/staging.py brings it back)."
+)
 
 
 def load_defs_assets() -> list[dg.AssetsDefinition]:
@@ -44,6 +51,21 @@ def defs_checks() -> list:
 @pytest.fixture
 def tmp_io_manager(tmp_path: Path) -> DuckDBPandasIOManager:
     return DuckDBPandasIOManager(database=str(tmp_path / DB_FILENAME), schema="main")
+
+
+@pytest.fixture(scope="session")
+def fix_applied() -> bool:
+    """True when the learner has already applied the README Step 5 fix to stg_orders.
+
+    Shipped, stg_orders passes promo codes through untouched, so the 150 planted
+    dirty codes survive; after the one-line fix every surviving code is already
+    normalized. Tests that assert the shipped-bug behavior skip in the fixed state
+    so a learner's `make test` stays green after following the guide.
+    """
+    raw_orders = pd.read_csv(RAW_DIR / "orders.csv")
+    stg = invoke_definition(staging.stg_orders, {"raw_orders": raw_orders})
+    codes = stg["promo_code"].dropna()
+    return bool((codes == codes.str.strip().str.upper()).all())
 
 
 def invoke_definition(definition, frames: dict[str, pd.DataFrame]):

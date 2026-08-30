@@ -33,6 +33,9 @@ def main() -> int:
     try:
         df = con.execute(sys.argv[1]).fetchdf()
         print(df.to_markdown(index=False))
+    except duckdb.Error as exc:
+        print(exc, file=sys.stderr)
+        return 1
     finally:
         con.close()
     return 0

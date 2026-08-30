@@ -419,7 +419,9 @@ clicked anything.**
 2025-06-20 through 2025-07-08, exactly the sales window. Bounded on purpose: no partition
 ahead of the data, no infinite backfill. (One honest wrinkle: the very last slice, July 8,
 materializes **zero rows** — ticket sales close the night before each show, and July 8 is
-show day for the final concert. An empty partition that *should* be empty still succeeds.)
+show day for the final concert. An empty partition that *should* be empty still succeeds —
+just materialize at least one non-empty day before running the query below, since an
+empty-only write doesn't create the table.)
 
 1. Click `daily_sales` in the lineage view — note the partition bar, 19 slots, all missing.
 2. Materialize a single partition (say `2025-07-01`). One day's orders, grouped by tier.

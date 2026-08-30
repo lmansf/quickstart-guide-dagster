@@ -132,3 +132,25 @@ def test_planted_dirt_counts(frames):
 
     # EV-05 is the sellout: exactly 1200 tickets across all its orders
     assert int(orders.loc[orders["event_id"] == "EV-05", "qty"].sum()) == 1200
+
+
+def test_write_csvs_removes_stale_night8(tmp_path):
+    """Regenerating a season must not leave a PREVIOUS season's night-8 file in
+    scans/ (someone ran `make new-day`, then `make data SEED=n`) — that would
+    silently blend two seasons with every check green."""
+    stale = tmp_path / "scans" / "ticket_scans_2025-07-08.csv"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("stale old season\n")
+    write_csvs(tmp_path, seed=7)
+    assert not stale.exists()
+    assert (tmp_path / "extra" / "ticket_scans_2025-07-08.csv").exists()
+
+
+def test_dirty_codes_survive_sparse_seeds():
+    """Seeds where a campaign draws fewer than its dirty-code quota (e.g. 161)
+    must still generate — with the full 150 planted from other coded orders."""
+    orders = generate_all(161)["orders"]
+    codes = _codes(orders)
+    coded = codes.str.strip() != ""
+    dirty = coded & (codes != codes.str.strip().str.upper())
+    assert int(dirty.sum()) == 150

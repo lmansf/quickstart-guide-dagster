@@ -299,11 +299,20 @@ def _plant_dirty_codes(rng: random.Random, rows: list[dict]) -> None:
     other = [
         i for i, row in enumerate(rows) if row["promo_code"] not in (None, "SUMMER25", "VIPNIGHT")
     ]
+    # Cap each bucket at its population: rare seeds produce fewer than 30 VIPNIGHT
+    # orders, and rng.sample raises on over-sized requests. When every bucket is
+    # full-sized (seed 42 included) this makes exactly the same RNG calls as the
+    # uncapped version, so committed-data byte-identity is preserved.
     picked = (
-        rng.sample(summer, DIRTY_SUMMER25_COUNT)
-        + rng.sample(vipnight, DIRTY_VIPNIGHT_COUNT)
-        + rng.sample(other, DIRTY_OTHER_COUNT)
+        rng.sample(summer, min(DIRTY_SUMMER25_COUNT, len(summer)))
+        + rng.sample(vipnight, min(DIRTY_VIPNIGHT_COUNT, len(vipnight)))
+        + rng.sample(other, min(DIRTY_OTHER_COUNT, len(other)))
     )
+    shortfall = DIRTY_PROMO_TOTAL - len(picked)
+    if shortfall > 0:
+        chosen = set(picked)
+        leftovers = [i for i in summer + vipnight + other if i not in chosen]
+        picked += rng.sample(leftovers, min(shortfall, len(leftovers)))
     for index in sorted(picked):
         row = rows[index]
         row["promo_code"] = _mutate_code(row["promo_code"], rng.choice(PROMO_MUTATIONS))
@@ -478,6 +487,10 @@ def write_csvs(out_dir: Path, seed: int = SEED) -> None:
     for night, frame in data["scans_by_night"].items():
         parent = extra_dir if night == SENSOR_NIGHT else scans_dir
         _write_csv(frame, parent / f"ticket_scans_{night}.csv")
+    # Night 8 belongs in extra/ until `make new-day` delivers it. If a PREVIOUS
+    # season's copy is sitting in scans/ (someone ran new-day, then regenerated),
+    # leaving it there would silently blend two seasons — remove it.
+    (scans_dir / f"ticket_scans_{SENSOR_NIGHT}.csv").unlink(missing_ok=True)
 
 
 def _write_csv(frame: pd.DataFrame, path: Path) -> None:

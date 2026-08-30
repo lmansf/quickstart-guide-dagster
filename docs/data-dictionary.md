@@ -219,6 +219,11 @@ Columns `metric (str), value (str)`. The rows: `total_net_revenue`, `tickets_sol
 `top_tier_by_revenue`, `sellout_events`, `worst_no_show_event`. The asset's
 `executive_summary` metadata is the Markdown version you read in the UI (README Step 3).
 
+Denominator note: `tickets_sold` counts **all** orders (refunds included, all 8 events),
+while `overall_show_up_rate` comes from `attendance_by_event` — **completed** orders only,
+and only events that have scans. The two KPIs deliberately answer different questions
+("how many did we sell?" vs. "of tickets people kept, how many walked in?").
+
 ### `daily_sales` — partitioned; one slice per day, single table
 
 Partitioned by `daily_partitions = DailyPartitionsDefinition("2025-06-20", "2025-07-09")` —

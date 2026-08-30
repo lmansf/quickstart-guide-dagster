@@ -69,6 +69,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pytest" },
     { name = "ruff" },
+    { name = "tabulate" },
 ]
 
 [package.metadata]
@@ -81,6 +82,7 @@ requires-dist = [
     { name = "pandas", specifier = "==2.3.3" },
     { name = "pytest", specifier = "==9.1.1" },
     { name = "ruff", specifier = "==0.16.5" },
+    { name = "tabulate", specifier = "==0.10.0" },
 ]
 
 [[package]]
