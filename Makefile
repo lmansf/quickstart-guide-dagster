@@ -6,7 +6,7 @@ setup:
 	uv sync --frozen
 
 dev:
-	DAGSTER_HOME=$(CURDIR)/.dagster_home uv run dagster dev
+	DAGSTER_HOME="$(CURDIR)/.dagster_home" uv run dagster dev
 
 materialize:
 	uv run dagster job execute -m cadence.definitions -j refresh_all
@@ -31,3 +31,4 @@ data:
 
 reset:
 	rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv
+	rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*

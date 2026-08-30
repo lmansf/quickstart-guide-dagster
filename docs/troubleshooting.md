@@ -96,6 +96,7 @@ install GnuWin32.Make` also exists if you want `make` itself.)
 
 ```bash
 rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv
+rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*
 ```
 
 - **Deletes the warehouse** (`cadence.duckdb` and any write-ahead log). It's fully disposable —

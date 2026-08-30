@@ -85,7 +85,7 @@ roster) — it is not a CSV. Orders carry their own `unit_price_usd`.
 | CMP-11 | Encore Newsletter | email | ENCORE | 150.00 | 06-20 → 07-08 | quiet performer |
 | CMP-12 | Partner Playlist | youtube | PLAYLOUD | 500.00 | 06-23 → 07-08 | mid |
 
-### `data/raw/orders.csv` — ~3,500 rows (exact count fixed by seed 42; sorted by `ordered_at`, then `order_id`)
+### `data/raw/orders.csv` — 3,618 rows at seed 42 (sorted by `ordered_at`, then `order_id`)
 
 | column | dtype | semantics |
 |---|---|---|
@@ -247,5 +247,6 @@ somewhere you can see it. If you find dirt that isn't in this table, *that* woul
 | **The code-less campaign** — CMP-04 Retarget Blitz spends real money but has no promo code | 1 campaign | empty `promo_code` in the hardcoded campaign roster | `campaign_performance` shows CMP-04 with spend and `attributed_orders = 0` — the "code attribution can't see this channel" lesson |
 
 Deterministic guardrails on the whole dataset (asserted by `tests/test_generator.py`):
-~3,500 orders (3,000–4,000), 5,000–7,000 total scan rows across 8 nights, overall show-up
+3,618 orders at seed 42 (asserted range 3,000–4,000), 5,000–7,000 total scan rows across 8
+nights, overall show-up
 rate after dedupe/orphan-drop in [0.78, 0.90], and EV-05 at exactly 1,200 tickets.

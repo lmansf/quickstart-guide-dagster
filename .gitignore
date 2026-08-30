@@ -4,7 +4,9 @@ __pycache__/
 .pytest_cache/
 data/warehouse/*.duckdb
 data/warehouse/*.duckdb.wal
+data/warehouse/*.duckdb.tmp/
 data/scans/ticket_scans_2025-07-08.csv
+.tmp_dagster_home_*/
 .dagster_home/*
 !.dagster_home/dagster.yaml
 !.dagster_home/.gitignore

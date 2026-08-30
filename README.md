@@ -4,7 +4,7 @@ You just became the data person at **Cadence Hall**, a fictional 1,200-cap live-
 seven nights into an eight-night summer stand (July 1–8, 2025). Three teams are already in your
 inbox. Marketing wants to know *"which campaign actually sold tickets?"* The box office wants
 *"revenue by tier, net of refunds."* Operations wants *"how many sold tickets actually walk
-through the door?"* This repo is the venue's data platform in miniature: ~3,500 ticket orders,
+through the door?"* This repo is the venue's data platform in miniature: ~3,600 ticket orders,
 12 marketing campaigns, and 8 nights of gate scans flowing through a 13-asset Dagster pipeline
 into a local DuckDB file — and the lineage graph in the Dagster UI turns out to be the org
 chart of the business.
@@ -15,7 +15,8 @@ chart of the business.
 
 > [!NOTE]
 > Written against **Dagster 1.13** (pinned to `1.13.20` in `uv.lock`). Everything runs
-> **fully offline** and deterministically (seed 42) — the network is needed only for Step 0.
+> **fully offline** and deterministically (seed 42) — the network is needed only for
+> installing (Steps 0–1); from Step 2 on, nothing touches it.
 > The data is **synthetic, seeded to be interesting — not industry benchmarks.** It's stamped
 > as such so nobody quotes a fictional venue's ROAS in a real meeting.
 
@@ -108,7 +109,8 @@ differs. The full side-by-side table lives in
 ## Step 0 — Install prerequisites (optional)
 
 **Skip this step entirely if `uv --version` prints something.** [uv](https://docs.astral.sh/uv/)
-is the only tool you need — it fetches Python itself.
+is the only tool you need to install — it fetches Python itself. (You'll also want `git`,
+which you almost certainly have.)
 
 macOS / Linux:
 
@@ -134,8 +136,8 @@ brew install uv
 > [docs/troubleshooting.md](docs/troubleshooting.md).
 
 You do **not** need to install Python. The repo commits a `.python-version` file pinning
-`3.11`, and uv auto-fetches that interpreter the first time you sync. This is also the **only
-step that needs the network** — from Step 1 on, the whole pipeline runs offline.
+`3.11`, and uv auto-fetches that interpreter the first time you sync. Only this step and
+Step 1's `uv sync` need the network — **from Step 2 on, the whole pipeline runs offline**.
 
 Already set up? Jump to [Step 1](#step-1--clone-and-bootstrap).
 
@@ -197,8 +199,8 @@ the act of making reality match the declaration.
 > [!NOTE]
 > **Why the `DAGSTER_HOME` bit?** It points Dagster's instance state (run history, sensor
 > cursors, schedule state) at the committed `.dagster_home/` directory, so your history
-> survives restarts. The one file committed there, `dagster.yaml`, does exactly one thing:
-> turns telemetry off.
+> survives restarts. The only real file committed there, `dagster.yaml`, does exactly one
+> thing: turns telemetry off (a `.gitignore` beside it keeps the runtime state out of git).
 
 ## Step 3 — Materialize everything
 
@@ -212,10 +214,10 @@ hand early (it gets its own chapter in Step 7). For your first run, take the sim
 Now for the payoff. Click **`box_office_report`** → its latest materialization → the
 **metadata** pane → **`executive_summary`**. That one Markdown block answers all three
 questions from your inbox: which campaign won, revenue by tier net of refunds, and who
-actually showed up — including that **Neon Coyote sold out all 1,200 caps** and **Static Bloom
-drew the worst show-up rate (~72%)**. Total net revenue for the stand lands at
-**$335,166.00**. Notice something's **red** in the checks column
-along the way? Good eye. Hold that thought until Step 5.
+actually showed up — **Static Bloom drew the worst show-up rate (~72%)**. The report table
+itself holds the other headline as a KPI row: `sellout_events: Neon Coyote` — all 1,200
+caps gone. Total net revenue for the stand lands at **$335,166.00**. Notice something's
+**red** in the checks column along the way? Good eye. Hold that thought until Step 5.
 
 Prove the warehouse is real — it's one plain DuckDB file at `data/warehouse/cadence.duckdb`:
 
@@ -243,9 +245,10 @@ that channel. That's a lesson about attribution, not a bug.
 > (`make materialize` → `uv run dagster job execute -m cadence.definitions -j refresh_all`)
 > if you ever want this step headless.
 
-## Step 4 — Read the code (10 files, honestly)
+## Step 4 — Read the code (a dozen small files, honestly)
 
-The whole pipeline is ten Python files, and you can read them in one coffee:
+The whole pipeline is a dozen small Python files (two of them empty `__init__.py`s), and
+you can read them in one coffee:
 
 ```
 cadence/
@@ -330,7 +333,8 @@ selection syntax for "this asset and its descendants" — and the graph filters 
 the **Jobs** page, launch **`refresh_all`** again (same button as Step 3). Two things flip:
 
 1. **The check goes green.** All 150 orders now find their campaign.
-2. **The answer changes.** Re-run the Step 3 query: **Summer Kickoff jumps to #1** — it was
+2. **The answer changes.** Re-run the Step 3 query: **Summer Kickoff jumps to #1 among
+   campaigns** (the `(organic)` no-code row still tops the raw table) — it was
    the most undercounted campaign (~90 of the dirty codes were its `SUMMER25`) — and tiny
    **VIP Love Letter** ($120 spend, ~30 recovered `VIPNIGHT` orders) becomes the **best
    revenue-per-dollar** campaign on the board.
@@ -431,6 +435,12 @@ table, 19 independently rebuildable slices — re-running July 1 never touches J
 make query Q="SELECT order_date, SUM(net_revenue) AS net FROM daily_sales GROUP BY 1 ORDER BY 1"
 ```
 
+Raw equivalent (all platforms — quote the SQL):
+
+```bash
+uv run python scripts/query.py "SELECT order_date, SUM(net_revenue) AS net FROM daily_sales GROUP BY 1 ORDER BY 1"
+```
+
 ## Step 8 — Test it like software (optional, ~3 min)
 
 The pipeline is a Python package, so it gets tested like one:
@@ -454,9 +464,13 @@ What's actually being tested is worth a skim in `tests/`:
   bounds, the `(unattributed)` and `(organic)` rows present, CMP-04 at zero.
 - `test_checks.py` — **encodes the planted bug**: asserts `all_promo_orders_attributed`
   *fails* on shipped data with exactly 150 unattributed orders, and *passes* once codes are
-  normalized. CI stays green while the bug ships — because the bug is a feature.
+  normalized. CI stays green while the bug ships — because the bug is a feature. (Already
+  applied the Step 5 fix in your working tree? The shipped-bug test notices and **skips**
+  with a note instead of failing — your suite stays green either way.)
 - `test_generator.py` — regenerates the synthetic data at seed 42 and asserts it's
   **byte-identical** to the committed CSVs, plus referential-integrity and planted-dirt counts.
+- `test_automation.py` — the file-drop sensor: baseline-and-skip on first evaluation, then
+  exactly one run per genuinely new scan file.
 
 And keep it tidy:
 
@@ -480,8 +494,10 @@ Three ways to keep going with this repo as your sandbox:
   byte-identity check compares seed 42 to the committed files, so restore with
   `make data SEED=42` — or `git checkout -- data` — when you're done.)
 - **Start over.** `make reset` deletes the warehouse and puts `data/scans/` back to nights
-  1–7, ready to replay the sensor demo (also reset the sensor's cursor from its page in the
-  UI, since it remembers night 8's filename).
+  1–7. To fully replay the sensor demo you must also clear Dagster's memory of it (cursor
+  *and* run history) — the recipe is in
+  [docs/troubleshooting.md](docs/troubleshooting.md#what-make-reset-does-and-doesnt-do),
+  and remember to re-materialize (Step 3) before the sensor fires again.
 
 ## Where to go next
 
@@ -510,7 +526,7 @@ Every `make` target and its raw equivalent. On Windows without `make`, run the r
 | `make query Q="…"` | Read-only SQL against the warehouse | `uv run python scripts/query.py "…"` |
 | `make new-day` | Deliver night 8 to the sensor | `cp data/extra/ticket_scans_2025-07-08.csv data/scans/` · PS: `Copy-Item data\extra\ticket_scans_2025-07-08.csv data\scans\` |
 | `make data` | Regenerate CSVs (`SEED=42` default) | `uv run python scripts/generate_data.py --seed 42 --out data` |
-| `make reset` | Delete warehouse, restore nights 1–7 | `rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv` · PS: `Remove-Item data\warehouse\*.duckdb, data\warehouse\*.duckdb.wal, data\scans\ticket_scans_2025-07-08.csv -ErrorAction SilentlyContinue` |
+| `make reset` | Delete warehouse + temp dirs, restore nights 1–7 | `rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv && rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*` · PS: `Remove-Item data\warehouse\*.duckdb, data\warehouse\*.duckdb.wal, data\scans\ticket_scans_2025-07-08.csv -ErrorAction SilentlyContinue; Remove-Item -Recurse data\warehouse\*.duckdb.tmp, .tmp_dagster_home_* -ErrorAction SilentlyContinue` |
 
 Top three issues (full versions and more in [docs/troubleshooting.md](docs/troubleshooting.md)):
 

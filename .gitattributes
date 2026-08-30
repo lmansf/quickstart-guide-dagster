@@ -1,0 +1,5 @@
+# Force LF everywhere, even on Windows checkouts with core.autocrlf=true.
+# tests/test_generator.py asserts the committed CSVs are byte-identical to what
+# the generator writes (always LF) — a CRLF checkout would fail that test with a
+# baffling "not byte-identical" message.
+* text=auto eol=lf
