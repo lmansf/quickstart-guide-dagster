@@ -2,7 +2,7 @@
 
 *~5 minutes. [Guide index](README.md) · Next: [Assets and lineage →](01-assets.md)*
 
-By the end of this chapter you'll have the Dagster UI open in your browser with 14 assets
+By the end of this chapter you'll have the Dagster UI open in your browser with 15 assets
 waiting in it. Nothing will have run yet — that's Chapter 1.
 
 ## Install `uv` (skip if you have it)
@@ -94,7 +94,7 @@ Dagster webserver *plus* the daemon that powers schedules and sensors in Chapter
 
 ## Check your work
 
-In the left nav, open **Assets** → the **lineage** (graph) view. You should see 14 assets in
+In the left nav, open **Assets** → the **lineage** (graph) view. You should see 15 assets in
 six groups — `raw`, `staging`, `marts`, `reporting`, `publishing`, `daily` — wired left to right, exactly
 matching [the diagram in the index](README.md#the-example-this-guide-drives).
 

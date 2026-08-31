@@ -103,6 +103,57 @@ The repo ships a `vercel.json` wired for exactly this: `outputDirectory` points 
 service and go looking for a server entrypoint that was never meant to exist — a small lesson in
 its own right about publishing artifacts out of a pipeline repo.
 
+## Keeping the deployed report live
+
+Here's the part that trips people up. A git-backed host builds from **the repository**, not from
+your machine. Your warehouse (`data/warehouse/cadence.duckdb`) is a local file and gitignored —
+the host can't see it, and a "deploy hook" won't help, because it would just rebuild the data
+that's already committed.
+
+So publishing means getting the refreshed `data.json` / `data.js` into git. That's what
+`published_report` (`cadence/assets/publish.py`) does — the last asset in the graph:
+
+```python
+@dg.asset(group_name="publishing", deps=[boxoffice_dashboard_data])
+def published_report(context) -> None: ...
+```
+
+It stages **only** the two data files, commits them if they actually changed, and pushes. The
+host sees the push and redeploys. Turn it on with an environment variable:
+
+```bash
+PUBLISH_REPORT=1 make materialize
+```
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `PUBLISH_REPORT` | *(unset — skips)* | `1` / `true` / `yes` / `on` enables publishing |
+| `PUBLISH_BRANCH` | current branch | Branch to push to (use the one your host deploys) |
+| `PUBLISH_REMOTE` | `origin` | Git remote to push to |
+
+Four design choices in there are worth stealing for any "pipeline publishes to git" job:
+
+- **Opt-in.** Unset, the asset records a skip and touches nothing — so a reader following this
+  guide never has their repo committed to behind their back.
+- **Pathspec-limited.** The commit names the two data files explicitly, so unrelated work in
+  your tree — even *staged* work — is never swept into it.
+- **No-op when nothing changed.** This is the [determinism](#why-the-export-is-deterministic)
+  payoff: identical data produces identical bytes, so a scheduled run that changes nothing makes
+  no commit and triggers no deploy. Without determinism you'd get a junk commit every tick.
+- **Loud on failure.** A push that can't authenticate fails the run with git's own stderr, rather
+  than silently leaving the site stale.
+
+Running it on a schedule (a Dagster daemon on your own box, say) needs two things: a checkout
+whose remote accepts **non-interactive** pushes — an SSH key without a passphrase, or a token in
+the remote URL — and a branch that doesn't diverge from the remote, since the asset pushes rather
+than reconciling. A dedicated publishing checkout is the tidiest way to guarantee both.
+
+> [!NOTE]
+> If you'd rather not have a pipeline commit to your repository at all, the alternative is to
+> upload the payload to object storage and have the page `fetch()` it at load. That trades a
+> redeploy for a runtime request — and means the numbers can change without a git history of
+> what changed when, which is a real loss for a report people make decisions from.
+
 ## What you learned
 
 - Assets can produce **external artifacts**, not just tables — they return `None` and still get

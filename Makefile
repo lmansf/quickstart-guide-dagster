@@ -1,6 +1,6 @@
 SEED ?= 42
 
-.PHONY: setup dev materialize test lint fmt query new-day data reset
+.PHONY: setup dev materialize publish test lint fmt query new-day data reset
 
 setup:
 	uv sync --frozen
@@ -10,6 +10,9 @@ dev:
 
 materialize:
 	uv run dagster job execute -m cadence.definitions -j refresh_all
+
+publish:
+	PUBLISH_REPORT=1 uv run dagster job execute -m cadence.definitions -j refresh_all
 
 test:
 	uv run pytest

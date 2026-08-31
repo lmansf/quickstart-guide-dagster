@@ -6,7 +6,7 @@ This is the concept the rest of Dagster hangs off. Get it and everything else is
 
 ## The idea: declare what should exist
 
-Every asset in your UI says **"Never materialized."** Dagster knows all 14 assets, and every
+Every asset in your UI says **"Never materialized."** Dagster knows all 15 assets, and every
 dependency between them, before a single row has been computed.
 
 That's the flip. A cron scheduler or an Airflow DAG is a list of *tasks to run* — imperative,
@@ -46,15 +46,15 @@ derived from parameter names.
 
 ## Materialize the graph
 
-In the lineage view, click **Materialize all**. Dagster opens a *"Launch runs to materialize 14
+In the lineage view, click **Materialize all**. Dagster opens a *"Launch runs to materialize 15
 assets"* dialog asking about partitions — that's `daily_sales` raising its hand early
 ([Chapter 5](05-partitions.md) is about it). For now take the simpler road:
 
 **Cancel** that dialog → open the **Jobs** page → click **`refresh_all`** → **Launch run**.
-That job packages exactly the 13 un-partitioned assets. (Jobs are Chapter 4; for now it's just
+That job packages exactly the 14 un-partitioned assets. (Jobs are Chapter 4; for now it's just
 "the everything button.")
 
-Watch the run: 13 assets flow left to right in about 15 seconds, each turning green as it
+Watch the run: 14 assets flow left to right in about 15 seconds, each turning green as it
 completes.
 
 Headless equivalent, any time you want it without the UI:

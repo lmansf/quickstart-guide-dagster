@@ -79,6 +79,7 @@ in PowerShell:
 | `make setup` | `uv sync --frozen` |
 | `make dev` | `$env:DAGSTER_HOME = "$PWD\.dagster_home"; uv run dagster dev` |
 | `make materialize` | `uv run dagster job execute -m cadence.definitions -j refresh_all` |
+| `make publish` | `$env:PUBLISH_REPORT = "1"; uv run dagster job execute -m cadence.definitions -j refresh_all` |
 | `make test` | `uv run pytest` |
 | `make lint` | `uv run ruff check .` |
 | `make fmt` | `uv run ruff format .` |

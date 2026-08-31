@@ -74,7 +74,7 @@ one sitting:
 ```
 docs/guide/        the guide itself — start here
 docs/use-cases.md  adapting the pattern to your domain
-cadence/           the example pipeline (14 assets, 4 checks, 2 jobs, 1 schedule, 1 sensor)
+cadence/           the example pipeline (15 assets, 4 checks, 2 jobs, 1 schedule, 1 sensor)
 data/              seeded sample CSVs — campaigns, orders, gate scans
 reports/boxoffice/ the published HTML report from Chapter 6
 tests/             the test suite from Chapter 7
@@ -94,6 +94,7 @@ Every `make` target and the raw command it runs. On Windows without `make`, use 
 | `make setup` | Create `.venv`, install exact pins | `uv sync --frozen` |
 | `make dev` | Launch Dagster at `localhost:3000` | `DAGSTER_HOME=$PWD/.dagster_home uv run dagster dev` · PS: `$env:DAGSTER_HOME = "$PWD\.dagster_home"; uv run dagster dev` |
 | `make materialize` | Headless full refresh (no UI) | `uv run dagster job execute -m cadence.definitions -j refresh_all` |
+| `make publish` | Refresh **and** push the report so the host redeploys | `PUBLISH_REPORT=1 uv run dagster job execute -m cadence.definitions -j refresh_all` |
 | `make test` | Run the test suite | `uv run pytest` |
 | `make lint` | Lint with ruff | `uv run ruff check .` |
 | `make fmt` | Format with ruff | `uv run ruff format .` |

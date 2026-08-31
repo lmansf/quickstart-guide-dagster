@@ -28,7 +28,7 @@ seven nights into an eight-night summer stand (July 1–8, 2025). Three teams ar
 - **The box office** — *"revenue by tier, net of refunds?"*
 - **Operations** — *"how many sold tickets actually walk through the door?"*
 
-Answering those three questions is what builds the pipeline. Here it is — all 14 assets, before
+Answering those three questions is what builds the pipeline. Here it is — all 15 assets, before
 you install anything:
 
 ```mermaid
@@ -55,6 +55,7 @@ flowchart LR
   end
   subgraph PUBLISHING["publishing"]
     boxoffice_dashboard_data
+    published_report
   end
   subgraph DAILY["daily: 19 partitions"]
     daily_sales
@@ -78,6 +79,7 @@ flowchart LR
   stg_events --> boxoffice_dashboard_data
   stg_campaigns --> boxoffice_dashboard_data
   attendance_by_event --> boxoffice_dashboard_data
+  boxoffice_dashboard_data --> published_report
   stg_orders --> daily_sales
 ```
 
