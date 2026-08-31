@@ -84,9 +84,9 @@ in PowerShell:
 | `make lint` | `uv run ruff check .` |
 | `make fmt` | `uv run ruff format .` |
 | `make query Q="SELECT …"` | `uv run python scripts/query.py "SELECT …"` |
-| `make new-day` | `Copy-Item data\extra\ticket_scans_2025-07-08.csv data\scans\` |
+| `make new-day` | `uv run python scripts/add_night.py` |
 | `make data` | `uv run python scripts/generate_data.py --seed 42 --out data` |
-| `make reset` | `Remove-Item data\warehouse\*.duckdb, data\warehouse\*.duckdb.wal, data\scans\ticket_scans_2025-07-08.csv -ErrorAction SilentlyContinue` |
+| `make reset` | `Remove-Item data\warehouse\*.duckdb, data\warehouse\*.duckdb.wal, data\scans\ticket_scans_2025-07-0[89].csv -ErrorAction SilentlyContinue; Remove-Item -Recurse data\nights -ErrorAction SilentlyContinue` |
 
 (If you have Git Bash or WSL, the macOS/Linux commands in the guide work as-is; `winget
 install GnuWin32.Make` also exists if you want `make` itself.)
@@ -97,14 +97,15 @@ install GnuWin32.Make` also exists if you want `make` itself.)
 
 ```bash
 rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv
-rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*
+rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_* data/nights
+rm -f data/scans/ticket_scans_2025-07-0[9].csv data/scans/ticket_scans_2025-07-[1-9][0-9].csv
 ```
 
 - **Deletes the warehouse** (`cadence.duckdb` and any write-ahead log). It's fully disposable —
   the next materialization rebuilds every table from the CSVs.
-- **Restores `data/scans/` to nights 1–7** by removing night 8's file, so the
-  `new_scan_file_sensor` demo can be replayed. Night 8's copy in `data/scans/` is gitignored,
-  so running `make new-day` never dirties your `git status`; the original stays in
+- **Restores `data/scans/` to nights 1–7** by removing night 8's file plus any shows `make
+  new-day` synthesized past the roster (nights 9+, which live in `data/nights/`). All of that is
+  gitignored, so growing the season never dirties your `git status`; night 8's original stays in
   `data/extra/`.
 - **Does not** touch run history or sensor state. Both live in `.dagster_home/` — and both
   block a sensor-demo replay: the sensor's cursor remembers the last filename it saw, *and*

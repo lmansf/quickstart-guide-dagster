@@ -154,3 +154,25 @@ def test_dirty_codes_survive_sparse_seeds():
     coded = codes.str.strip() != ""
     dirty = coded & (codes != codes.str.strip().str.upper())
     assert int(dirty.sum()) == 150
+
+
+def test_synthesized_nights_extend_the_season_deterministically():
+    """`make new-day` past the committed roster invents new shows — same night
+    number always yields the same data, and ids never collide with ORD-00001…"""
+    from cadence.data_gen import EVENTS, synthesize_night
+
+    night = synthesize_night(9)
+    assert night["event_date"] == "2025-07-09"
+    assert night["event"].iloc[0]["event_id"] == "EV-09"
+    assert night["orders"]["order_id"].str.startswith("ORD-N09-").all()
+    assert night["scans"]["scan_id"].str.startswith("SCN-9-").all()
+
+    assert synthesize_night(9)["orders"].equals(night["orders"])
+    assert not synthesize_night(10)["orders"].equals(night["orders"])
+
+    # nights past the campaign windows still generate (organic orders, no codes)
+    late = synthesize_night(14)
+    assert len(late["orders"]) > 0
+
+    with pytest.raises(ValueError):
+        synthesize_night(len(EVENTS))  # committed roster is generate_all()'s job

@@ -14,6 +14,7 @@ in the repo; ``refresh_all`` includes the group, so a normal refresh republishes
 
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 
 import dagster as dg
@@ -55,6 +56,19 @@ def _attribution(orders: pd.DataFrame, campaigns: pd.DataFrame, code_col: str) -
     return joined.groupby("campaign_id").agg(
         orders=("order_id", "count"), tickets=("qty", "sum"), net=("net_revenue", "sum")
     )
+
+
+def _season_label(events: list[dict]) -> str:
+    """e.g. "Summer season, July 1-8 2025" — spans whatever shows exist."""
+    if not events:
+        return "Summer season"
+    first = datetime.strptime(events[0]["date"], "%Y-%m-%d")
+    last = datetime.strptime(events[-1]["date"], "%Y-%m-%d")
+    if (first.month, first.year) == (last.month, last.year):
+        span = f"{first.strftime('%B')} {first.day}\u2013{last.day} {last.year}"
+    else:
+        span = f"{first.strftime('%b %-d')} \u2013 {last.strftime('%b %-d')} {last.year}"
+    return f"Summer season, {span}"
 
 
 @dg.asset(
@@ -308,7 +322,8 @@ def boxoffice_dashboard_data(
     # what a fresh clone materializes. See docs/guide/06-publishing.md.
     payload = {
         "season": {
-            "label": "Summer season, July 1–8 2025",
+            # Derived, not hardcoded: the season grows when `make new-day` adds shows.
+            "label": _season_label(events),
             "first_show": events[0]["date"] if events else None,
             "last_show": events[-1]["date"] if events else None,
             "last_order_date": daily[-1]["date"] if daily else None,

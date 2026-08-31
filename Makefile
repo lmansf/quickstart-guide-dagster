@@ -27,11 +27,12 @@ query:
 	uv run python scripts/query.py "$(Q)"
 
 new-day:
-	cp data/extra/ticket_scans_2025-07-08.csv data/scans/
+	uv run python scripts/add_night.py
 
 data:
 	uv run python scripts/generate_data.py --seed $(SEED) --out data
 
 reset:
 	rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv
-	rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*
+	rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_* data/nights
+	rm -f data/scans/ticket_scans_2025-07-0[9].csv data/scans/ticket_scans_2025-07-[1-9][0-9].csv

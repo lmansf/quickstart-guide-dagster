@@ -279,6 +279,12 @@ def _attach_promo_codes(rng: random.Random, rows: list[dict]) -> None:
                 spend = spend * VIP_BOOST_FACTOR
             codes.append(code)
             weights.append(spend)
+        if not codes:
+            # No campaign was live when this order was placed — organic. (Never
+            # happens for the committed roster, where every order falls inside a
+            # campaign window; reachable for synthesized nights past the season.)
+            row["promo_code"] = None
+            continue
         row["promo_code"] = rng.choices(codes, weights=weights, k=1)[0]
 
 
@@ -495,3 +501,148 @@ def write_csvs(out_dir: Path, seed: int = SEED) -> None:
 
 def _write_csv(frame: pd.DataFrame, path: Path) -> None:
     frame.to_csv(path, index=False, float_format=FLOAT_FMT, lineterminator="\n")
+
+
+# --------------------------------------------------------------------------- #
+# Extra nights — the season keeps going after the committed roster runs out    #
+# --------------------------------------------------------------------------- #
+
+# Names/genres cycle so night 9, 10, 11 … each get a plausible show.
+EXTRA_SHOWS: list[tuple[str, str]] = [
+    ("Harbour Lights", "indie"),
+    ("The Paper Kites", "folk"),
+    ("Velvet Circuit", "electronic"),
+    ("Sunday Brass", "funk"),
+    ("Nightjar", "jazz"),
+    ("Open Mic Roulette", "comedy"),
+    ("Concrete Garden", "punk"),
+    ("Cadence Strings", "classical"),
+]
+EXTRA_SELL_THROUGH = (0.62, 0.71, 0.79, 0.86, 0.93)  # cycles; keeps nights varied
+SEASON_START = date.fromisoformat(EVENTS[0][3])
+
+
+def next_night_number(existing_dates: list[str]) -> int:
+    """Night number (1-based) for the next show after the ones already present."""
+    return len(existing_dates) + 1
+
+
+def synthesize_night(night_number: int, seed: int = SEED) -> dict:
+    """Build one brand-new show night: its event row, orders, and gate scans.
+
+    Deterministic in ``(night_number, seed)`` — the same night always generates the
+    same data — and disjoint from the committed roster: ids are namespaced with the
+    night number so nothing collides with ORD-00001… from ``orders.csv``.
+
+    Returns ``{"event": DataFrame, "orders": DataFrame, "scans": DataFrame,
+    "event_date": "YYYY-MM-DD"}``.
+    """
+    if night_number <= len(EVENTS):
+        raise ValueError(
+            f"night {night_number} is part of the committed roster — "
+            "use generate_all()/write_csvs() for those"
+        )
+
+    rng = random.Random(seed * 1000 + night_number)
+    index = night_number - len(EVENTS) - 1
+    name, genre = EXTRA_SHOWS[index % len(EXTRA_SHOWS)]
+    event_id = f"EV-{night_number:02d}"
+    event_date = SEASON_START + timedelta(days=night_number - 1)
+    event_day = event_date.strftime(DATE_FMT)
+    sell_through = EXTRA_SELL_THROUGH[index % len(EXTRA_SELL_THROUGH)]
+
+    event = pd.DataFrame(
+        [
+            {
+                "event_id": event_id,
+                "event_name": name,
+                "genre": genre,
+                "event_date": event_day,
+                "capacity": CAPACITY,
+                "doors_time": DOORS_TIME,
+                "show_time": SHOW_TIME,
+            }
+        ]
+    )
+
+    # Prices drift a little each night so the tier mix stays interesting.
+    prices = {
+        "GA": round(34.0 + 2.0 * (index % 5), 2),
+        "Balcony": round(48.0 + 2.5 * (index % 5), 2),
+        "VIP": round(80.0 + 5.0 * (index % 5), 2),
+    }
+
+    rows: list[dict] = []
+    remaining = dict(TIER_CAPACITY)
+    tickets = 0
+    target = round(CAPACITY * sell_through)
+    while tickets < target:
+        open_tiers = [t for t in TIERS if remaining[t] > 0]
+        tier = rng.choices(open_tiers, weights=[TIER_WEIGHTS[t] for t in open_tiers], k=1)[0]
+        qty = min(rng.choices(QTY_CHOICES, weights=QTY_WEIGHTS, k=1)[0], remaining[tier])
+        remaining[tier] -= qty
+        tickets += qty
+        rows.append(
+            {
+                "event_id": event_id,
+                "ordered_at": _draw_ordered_at(rng, event_date),
+                "tier": tier,
+                "qty": qty,
+                "unit_price_usd": prices[tier],
+            }
+        )
+    rows.sort(key=lambda row: row["ordered_at"])
+    for sequence, row in enumerate(rows, start=1):
+        row["order_id"] = f"ORD-N{night_number:02d}-{sequence:04d}"
+
+    _attach_promo_codes(rng, rows)
+    _assign_status(rng, rows)
+    orders = _orders_frame(rows)
+
+    # Gate scans, same attendance model as the committed nights.
+    scans: list[dict] = []
+    for order in rows:
+        if order["status"] != "completed":
+            continue
+        probability = min(BASE_ATTENDANCE * TIER_ATTENDANCE_MULT[order["tier"]], MAX_ATTENDANCE)
+        for ticket in range(1, order["qty"] + 1):
+            if rng.random() >= probability:
+                continue
+            ticket_id = f"{order['order_id']}-T{ticket}"
+            seconds = _draw_scan_seconds(rng)
+            scans.append(
+                _scan_row(
+                    ticket_id, order["order_id"], event_id, _draw_gate(rng), event_date, seconds
+                )
+            )
+            if rng.random() < DUPLICATE_SCAN_RATE:
+                delay = rng.randint(*DUPLICATE_DELAY_SECONDS)
+                scans.append(
+                    _scan_row(
+                        ticket_id,
+                        order["order_id"],
+                        event_id,
+                        _draw_gate(rng),
+                        event_date,
+                        seconds + delay,
+                    )
+                )
+
+    scans.sort(key=lambda row: row["scanned_at"])
+    for sequence, row in enumerate(scans, start=1):
+        row["scan_id"] = f"SCN-{night_number}-{sequence:05d}"
+    scans_frame = pd.DataFrame(
+        [
+            {
+                "scan_id": row["scan_id"],
+                "ticket_id": row["ticket_id"],
+                "order_id": row["order_id"],
+                "event_id": row["event_id"],
+                "gate": row["gate"],
+                "scanned_at": row["scanned_at"].strftime(TIMESTAMP_FMT),
+            }
+            for row in scans
+        ]
+    )
+
+    return {"event": event, "orders": orders, "scans": scans_frame, "event_date": event_day}

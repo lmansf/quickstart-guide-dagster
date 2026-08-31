@@ -100,7 +100,7 @@ Every `make` target and the raw command it runs. On Windows without `make`, use 
 | `make lint` | Lint with ruff | `uv run ruff check .` |
 | `make fmt` | Format with ruff | `uv run ruff format .` |
 | `make query Q="…"` | Read-only SQL against the warehouse | `uv run python scripts/query.py "…"` |
-| `make new-day` | Deliver night 8 to the sensor (Chapter 4) | `cp data/extra/ticket_scans_2025-07-08.csv data/scans/` · PS: `Copy-Item data\extra\ticket_scans_2025-07-08.csv data\scans\` |
+| `make new-day` | Deliver the next show night — night 8, then newly synthesized ones (Chapter 4) | `uv run python scripts/add_night.py` |
 | `make data` | Regenerate CSVs (`SEED=42` default) | `uv run python scripts/generate_data.py --seed 42 --out data` |
 | `make reset` | Delete warehouse + temp dirs, restore nights 1–7 | `rm -f data/warehouse/*.duckdb data/warehouse/*.duckdb.wal data/scans/ticket_scans_2025-07-08.csv && rm -rf data/warehouse/*.duckdb.tmp .tmp_dagster_home_*` · PS: `Remove-Item data\warehouse\*.duckdb, data\warehouse\*.duckdb.wal, data\scans\ticket_scans_2025-07-08.csv -ErrorAction SilentlyContinue; Remove-Item -Recurse data\warehouse\*.duckdb.tmp, .tmp_dagster_home_* -ErrorAction SilentlyContinue` |
 

@@ -122,10 +122,26 @@ materializations, you can watch the needle move run over run.
 
 Night 8's scans arrived and nobody clicked anything.
 
+### Keep going
+
+`make new-day` doesn't stop at night 8. Once the held-back show is delivered, it **synthesizes a
+brand-new one** — night 9, 10, 11 … each with its own event, orders, and gate scans, seeded so
+the same night number always produces the same data. Run it again and the sensor fires again:
+
+```bash
+make new-day      # → "Added night 9: Harbour Lights (indie) on 2025-07-09 — 340 orders, 586 scans"
+```
+
+Synthesized shows land in `data/nights/<date>/` (gitignored) and the raw assets read them
+alongside the committed CSVs, so `data/raw/*.csv` stays byte-identical to the seed-42 generator —
+the guarantee [Chapter 7](07-testing.md) tests. `make reset` clears them and puts the season back
+to nights 1–7.
+
 > [!NOTE]
-> **Replaying the demo** takes more than `make reset`, because the sensor's cursor and its run
-> keys live in `.dagster_home/`. The full recipe is in
-> [troubleshooting](../troubleshooting.md#what-make-reset-does-and-doesnt-do).
+> **Replaying the sensor demo** takes more than `make reset`, because the sensor's cursor and its
+> run keys live in `.dagster_home/`. The full recipe is in
+> [troubleshooting](../troubleshooting.md#what-make-reset-does-and-doesnt-do). Adding a *new*
+> night needs none of that — a filename it has never seen always trips it.
 
 ## What you learned
 

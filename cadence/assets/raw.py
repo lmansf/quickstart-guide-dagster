@@ -3,11 +3,23 @@
 import dagster as dg
 import pandas as pd
 
-from cadence.resources import RAW_DIR, SCANS_DIR
+from cadence.resources import EXTRA_NIGHTS_DIR, RAW_DIR, SCANS_DIR
 
 
 def _preview(df: pd.DataFrame) -> dg.MetadataValue:
     return dg.MetadataValue.md(df.head(10).to_markdown(index=False))
+
+
+def _with_extra_nights(df: pd.DataFrame, filename: str) -> pd.DataFrame:
+    """Append rows from any synthesized nights (data/nights/<date>/<filename>).
+
+    The committed CSVs stay untouched — `make new-day` writes extra shows here
+    instead, so data/raw/*.csv remains byte-identical to the seed-42 generator.
+    """
+    extras = sorted(EXTRA_NIGHTS_DIR.glob(f"*/{filename}"))
+    if not extras:
+        return df
+    return pd.concat([df, *(pd.read_csv(p) for p in extras)], ignore_index=True)
 
 
 @dg.asset(
@@ -29,7 +41,7 @@ def raw_campaigns(context: dg.AssetExecutionContext) -> pd.DataFrame:
     description="The eight-night July 2025 event roster, read verbatim from data/raw/events.csv.",
 )
 def raw_events(context: dg.AssetExecutionContext) -> pd.DataFrame:
-    df = pd.read_csv(RAW_DIR / "events.csv")
+    df = _with_extra_nights(pd.read_csv(RAW_DIR / "events.csv"), "events.csv")
     context.add_output_metadata(
         {"row_count": dg.MetadataValue.int(len(df)), "preview": _preview(df)}
     )
@@ -42,7 +54,7 @@ def raw_events(context: dg.AssetExecutionContext) -> pd.DataFrame:
     description="Every ticket order as the box office recorded it, from data/raw/orders.csv.",
 )
 def raw_orders(context: dg.AssetExecutionContext) -> pd.DataFrame:
-    df = pd.read_csv(RAW_DIR / "orders.csv")
+    df = _with_extra_nights(pd.read_csv(RAW_DIR / "orders.csv"), "orders.csv")
     context.add_output_metadata(
         {"row_count": dg.MetadataValue.int(len(df)), "preview": _preview(df)}
     )

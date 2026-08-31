@@ -120,9 +120,17 @@ def materialize_all(tmp_path: Path, fix_promo_codes: bool = False) -> dg.Execute
     io_manager = DuckDBPandasIOManager(database=str(tmp_path / DB_FILENAME), schema="main")
     scans_copy = tmp_path / "scans-nights-1-7"
     shutil.copytree(raw.SCANS_DIR, scans_copy)
-    (scans_copy / "ticket_scans_2025-07-08.csv").unlink(missing_ok=True)
+    for extra in scans_copy.glob("ticket_scans_*.csv"):
+        if extra.stem.replace("ticket_scans_", "") > "2025-07-07":
+            extra.unlink()
+    # `make new-day` can also synthesize whole new shows into data/nights/; point the
+    # raw assets at an empty directory so the suite always sees the committed season.
+    empty_nights = tmp_path / "no-extra-nights"
+    empty_nights.mkdir()
     original_scans_dir = raw.SCANS_DIR
+    original_nights_dir = raw.EXTRA_NIGHTS_DIR
     raw.SCANS_DIR = scans_copy
+    raw.EXTRA_NIGHTS_DIR = empty_nights
     try:
         return dg.materialize(
             assets=[*assets, *load_defs_checks()],
@@ -132,6 +140,7 @@ def materialize_all(tmp_path: Path, fix_promo_codes: bool = False) -> dg.Execute
         )
     finally:
         raw.SCANS_DIR = original_scans_dir
+        raw.EXTRA_NIGHTS_DIR = original_nights_dir
 
 
 @pytest.fixture(scope="session")

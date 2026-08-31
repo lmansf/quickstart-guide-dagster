@@ -20,7 +20,9 @@ def _committed_nights(tmp_path, monkeypatch):
     (night 8 may be present locally if someone ran `make new-day`)."""
     scans = tmp_path / "scans"
     shutil.copytree(SCANS_DIR, scans)
-    (scans / NIGHT_8).unlink(missing_ok=True)
+    for extra in scans.glob("ticket_scans_*.csv"):
+        if extra.stem.replace("ticket_scans_", "") > "2025-07-07":
+            extra.unlink()
     monkeypatch.setattr(automation, "SCANS_DIR", scans)
     return scans
 

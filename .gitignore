@@ -9,6 +9,10 @@ data/warehouse/*.duckdb
 data/warehouse/*.duckdb.wal
 data/warehouse/*.duckdb.tmp/
 data/scans/ticket_scans_2025-07-08.csv
+# Shows synthesized past the committed roster by `make new-day`
+data/nights/
+data/scans/ticket_scans_2025-07-0[9].csv
+data/scans/ticket_scans_2025-07-[1-9][0-9].csv
 .tmp_dagster_home_*/
 .dagster_home/*
 !.dagster_home/dagster.yaml
