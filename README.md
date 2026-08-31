@@ -72,6 +72,7 @@ The guide drives a worked example — a fictional venue's data platform, small e
 one sitting:
 
 ```
+.env.example       copy to .env to switch on report publishing (Chapter 6)
 docs/guide/        the guide itself — start here
 docs/use-cases.md  adapting the pattern to your domain
 cadence/           the example pipeline (15 assets, 4 checks, 2 jobs, 1 schedule, 1 sensor)

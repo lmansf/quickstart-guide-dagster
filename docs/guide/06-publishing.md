@@ -119,17 +119,67 @@ def published_report(context) -> None: ...
 ```
 
 It stages **only** the two data files, commits them if they actually changed, and pushes. The
-host sees the push and redeploys. Turn it on with an environment variable:
+host sees the push and redeploys.
 
-```bash
-PUBLISH_REPORT=1 make materialize
-```
+### Turning it on
+
+Publishing is controlled by three environment variables:
 
 | Variable | Default | Purpose |
 |---|---|---|
 | `PUBLISH_REPORT` | *(unset — skips)* | `1` / `true` / `yes` / `on` enables publishing |
 | `PUBLISH_BRANCH` | current branch | Branch to push to (use the one your host deploys) |
 | `PUBLISH_REMOTE` | `origin` | Git remote to push to |
+
+**Where to put them: a `.env` file in the project root.** Dagster's CLI loads it automatically,
+so the UI, the daemon, and every schedule and sensor run see it — no shell setup, nothing to
+remember:
+
+```bash
+cp .env.example .env      # then edit PUBLISH_BRANCH to the branch your host deploys
+```
+
+```ini
+# .env
+PUBLISH_REPORT=1
+PUBLISH_BRANCH=main
+PUBLISH_REMOTE=origin
+```
+
+Restart `dagster dev` afterwards — the file is read at startup. `.env` is gitignored: it's your
+machine's config, not the repo's.
+
+> [!NOTE]
+> **One catch worth knowing.** `.env` is a feature of the Dagster **CLI** (`dagster dev`,
+> `dagster job execute`). A bare `python` script that calls `dg.materialize()` directly does not
+> read it, and will skip publishing. Verified both ways — if publishing mysteriously no-ops,
+> check how the process was launched.
+
+Two other ways, for when `.env` doesn't fit:
+
+```bash
+make publish              # one-off: a refresh with publishing enabled, no .env needed
+```
+
+```ini
+# /etc/systemd/system/dagster.service — for an always-on daemon
+[Service]
+WorkingDirectory=/home/you/quickstart-guide-dagster
+Environment=PUBLISH_REPORT=1
+Environment=PUBLISH_BRANCH=main
+ExecStart=/home/you/.local/bin/uv run dagster dev
+```
+
+### Checking it worked
+
+Open `published_report` in the UI and read the latest materialization's metadata. It tells you
+exactly what happened, in all three cases:
+
+| `published` | `reason` / `commit` | Meaning |
+|---|---|---|
+| `false` | `PUBLISH_REPORT is not set` | Publishing is off — the variable isn't reaching the process |
+| `false` | `data unchanged since last publish` | Working as intended; nothing to deploy |
+| `true` | a short SHA + branch | Pushed — your host is redeploying now |
 
 Four design choices in there are worth stealing for any "pipeline publishes to git" job:
 

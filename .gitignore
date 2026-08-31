@@ -1,4 +1,7 @@
 .venv/
+
+# Local machine config (publishing switches) — see .env.example
+.env
 __pycache__/
 .ruff_cache/
 .pytest_cache/
